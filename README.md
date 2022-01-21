@@ -79,3 +79,57 @@ CREATE INDEX searchMyDocs ON resume(resume) INDEXTYPE IS CTXSYS.CONTEXT PARAMETE
 ```
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Java', 1) > 0;
 ```
+
+- Proximity search look for the word Eloqua near word code  (Requires Chip resume)
+
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Eloqua ; code', 1) > 0;
+```
+
+- Fuzzy Search on term.
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '?java', 1) > 0;
+```
+
+- Add More Docs in the apex app. To sync the index execute.
+
+```
+begin
+EXEC CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
+end;
+```
+
+
+- WIP markup html
+
+```
+SET SERVEROUTPUT ON;
+DECLARE
+    v_query VARCHAR2(255) := 'Java';
+    t_restab ctx_doc.highlight_tab;
+BEGIN
+
+    FOR r_pdf IN (SELECT doc_id, resume FROM resume WHERE contains(resume,v_query) > 0) LOOP
+
+        ctx_doc.highlight -- ctx_doc.markup is also very useful
+        (
+            index_name  => 'searchMyDocs',
+            textkey     => r_pdf.doc_id,
+            text_query  => v_query,
+            restab      => t_restab,
+            plaintext   => FALSE
+        );
+        FOR I IN t_restab.FIRST..t_restab.LAST LOOP                
+            dbms_output.put_line(
+                utl_raw.cast_to_varchar2(
+                    dbms_lob.substr(r_pdf.p_file, t_restab(I).OFFSET, t_restab(I).LENGTH)
+                )
+            );
+        END LOOP;
+
+        dbms_output.put_line('');
+
+    END LOOP;
+END;
+/
+```
