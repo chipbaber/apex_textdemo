@@ -74,13 +74,13 @@ CREATE INDEX searchMyDocs ON resume(resume) INDEXTYPE IS CTXSYS.CONTEXT PARAMETE
 
 ## Basic queries of the indexed documentation.
 
-- Core query inside the document to see if contains a keyword. In this first example we are looking for all candidates who have the word java inside there resume.
+- Core query inside the document to see if contains a keyword. In this first example we are looking for all candidates who have the word java inside there resume. The greater than zero means a score is detected, the information is in the document.
 
 ```
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Java', 1) > 0;
 ```
 
-- Proximity search look for the word Eloqua near word code  (Requires Chip resume)
+- Proximity search look for the word **Eloqua** near word **code**  (Requires Chip resume)
 
 ```
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Eloqua ; code', 1) > 0;
@@ -88,14 +88,60 @@ SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume,
 
 - Fuzzy Search on term.
 ```
-SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '?java', 1) > 0;
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '?jav', 1) > 0;
 ```
 
-- Add More Docs in the apex app. To sync the index execute.
+- Stem search on a term. In this example we are looking for the documents that stem of the word work example would return words like workflow,
+
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '$work', 1) > 0;
+```
+
+- Add More Docs in the apex app. To sync the index execute in this case with 5M of memory
 
 ```
 begin
 EXEC CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
+end;
+```
+
+## Construct Thematic Search Constructs
+
+- Build themes on docs. To do this you first need to create a table to hold your themes.
+
+```
+create table themes (query_id number, theme varchar2(2000), weight number);
+```
+
+- Create all the themes on the docs in the table. Run this in pl/sql mode in SQL Workshop. This procedure will loop through the resume table and
+create themes for all the docs currently in the table.
+
+```
+begin
+	for x in (select doc_id from resume) loop
+    ctx_doc.themes ('searchMyDocs', x.doc_id, 'themes', x.doc_id, full_themes => false);
+end loop;
+end;
+```
+
+- Query the themes. Show all themes with a weight over 25 per resume.
+```
+select r.title, r.filename, t.theme, t.weight from resume r, themes t
+where r.doc_id = t.query_id and weight > 25
+order by doc_id asc;
+```
+
+- If you need to add more documents you need to rebuild the themes. Make sure to truncate the table before rebuilding.
+```
+declare
+pragma autonomous_transaction;
+killThemes	varchar2(100) := 'truncate table themes';
+
+begin
+execute immediate killThemes;
+	for x in (select doc_id from resume) loop
+    ctx_doc.themes ('searchMyDocs', x.doc_id, 'themes', x.doc_id, full_themes => false);
+end loop;
 end;
 ```
 
