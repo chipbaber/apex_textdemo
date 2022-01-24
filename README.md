@@ -198,9 +198,35 @@ end loop;
 end;                      
 ```
 
-- Query the filtered doc. Showing the title and the filtered text. 
+- Query the filtered doc. Showing the title and the filtered text.
 
 ```
 select r.title, f.document as "Plain Text Resume" from resume r, filtered_docs f
 where r.doc_id = f.query_id
+```
+
+## Create full themes indexing
+
+- create the table for full themes.
+
+```
+create table full_themes( QUERY_ID	number, THEME		varchar2(2000),  WEIGHT		NUMBER);
+```
+
+- Create indexs for full themes.
+
+```
+begin
+	for x in (select doc_id from resume) loop
+    	ctx_doc.themes ('searchMyDocs', x.doc_id, 'full_themes', x.doc_id, full_themes => true);
+end loop;
+end;  
+```
+
+- Query the full themes. Truth is you need a bit of a tool to visualize thematic connections. So this one works but is tough to convey to users. 
+
+```
+select r.title, r.filename, t.theme, t.weight from resume r, full_themes t
+where r.doc_id = t.query_id
+order by doc_id asc;
 ```
