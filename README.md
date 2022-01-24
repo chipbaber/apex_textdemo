@@ -145,6 +145,50 @@ end loop;
 end;
 ```
 
+## Construct Gists Search Constructs
+
+- Create the gists table
+
+```
+create table gists (query_id  number, pov  varchar2(80), gist  CLOB);
+```
+
+- Build out gists index.
+```
+begin
+	for x in (select doc_id from resume) loop
+    ctx_doc.gist('searchMyDocs', x.doc_id, 'gists',x.doc_id,'P', pov =>'GENERIC');
+end loop;
+end;
+```
+
+- Query a gist for a document.
+```
+select * from gists;
+```
+
+- Rebuild the gists index
+```
+declare
+pragma autonomous_transaction;
+killGists	varchar2(100) := 'truncate table gists';
+
+begin
+execute immediate killGists;
+	for x in (select doc_id from resume) loop
+    ctx_doc.gist('searchMyDocs', x.doc_id, 'gists',x.doc_id,'P', pov =>'GENERIC');
+end loop;
+end;
+```
+
+## Markup a document
+
+- Create a Table for markup.
+
+
+
+
+
 
 - WIP markup html
 
