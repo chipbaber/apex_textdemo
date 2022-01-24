@@ -181,45 +181,26 @@ end loop;
 end;
 ```
 
-## Markup a document
+## Create a filtered doc
 
 - Create a Table for markup.
 
+```
+create table filtered_docs(QUERY_ID  	number,    DOCUMENT  	clob);
+```
 
+- Build out filtered docs index's.
+```
+begin
+	for x in (select doc_id from resume) loop
+    	ctx_doc.filter ('searchMyDocs', x.doc_id, 'filtered_docs', x.doc_id, plaintext => true);
+end loop;
+end;                      
+```
 
-
-
-
-- WIP markup html
+- Query the filtered doc. Showing the title and the filtered text. 
 
 ```
-SET SERVEROUTPUT ON;
-DECLARE
-    v_query VARCHAR2(255) := 'Java';
-    t_restab ctx_doc.highlight_tab;
-BEGIN
-
-    FOR r_pdf IN (SELECT doc_id, resume FROM resume WHERE contains(resume,v_query) > 0) LOOP
-
-        ctx_doc.highlight -- ctx_doc.markup is also very useful
-        (
-            index_name  => 'searchMyDocs',
-            textkey     => r_pdf.doc_id,
-            text_query  => v_query,
-            restab      => t_restab,
-            plaintext   => FALSE
-        );
-        FOR I IN t_restab.FIRST..t_restab.LAST LOOP                
-            dbms_output.put_line(
-                utl_raw.cast_to_varchar2(
-                    dbms_lob.substr(r_pdf.p_file, t_restab(I).OFFSET, t_restab(I).LENGTH)
-                )
-            );
-        END LOOP;
-
-        dbms_output.put_line('');
-
-    END LOOP;
-END;
-/
+select r.title, f.document as "Plain Text Resume" from resume r, filtered_docs f
+where r.doc_id = f.query_id
 ```
