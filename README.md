@@ -101,7 +101,7 @@ SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume,
 
 ```
 begin
-EXEC CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
+CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
 end;
 ```
 
@@ -205,9 +205,9 @@ select r.title, f.document as "Plain Text Resume" from resume r, filtered_docs f
 where r.doc_id = f.query_id
 ```
 
-## Create full themes indexing
+## Create Full Themes Indexing
 
-- create the table for full themes.
+- Create the table for full themes. A full theme has both the theme and any relations to other themes.
 
 ```
 create table full_themes( QUERY_ID	number, THEME		varchar2(2000),  WEIGHT		NUMBER);
@@ -223,10 +223,23 @@ end loop;
 end;  
 ```
 
-- Query the full themes. Truth is you need a bit of a tool to visualize thematic connections. So this one works but is tough to convey to users. 
+- Query the full themes. Truth is you need a bit of a tool to visualize thematic connections. So this one works but is tough to convey to users.
 
 ```
 select r.title, r.filename, t.theme, t.weight from resume r, full_themes t
 where r.doc_id = t.query_id
 order by doc_id asc;
+```
+
+## Scripted Rebuilds
+
+- If you need to rebuild themes, gists ... after loading more documents execute the code in resumeAdmin.sql with the procedures you require. Then call the procedures. Example below.
+
+```
+begin
+resumeAdmin.Batch_Create_Themes();
+resumeAdmin.Batch_Create_Full_Themes();
+resumeAdmin.Batch_Create_Gists();
+resumeAdmin.Batch_Create_Filtered_Docs();
+end;
 ```
