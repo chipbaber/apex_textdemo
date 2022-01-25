@@ -37,7 +37,7 @@ CREATE table "RESUME" (
     "TITLE"        VARCHAR2(500),
     "SUBMITTED_BY" VARCHAR2(300),
     "RESUME"       BLOB,
-    "MIMETYPE"     VARCHAR2(50),
+    "MIMETYPE"     VARCHAR2(250),
     "CREATED_DATE" DATE,
     "FILENAME"     VARCHAR2(200),
     constraint  "RESUME_PK" primary key ("DOC_ID")
@@ -113,8 +113,7 @@ end;
 create table themes (query_id number, theme varchar2(2000), weight number);
 ```
 
-- Create all the themes on the docs in the table. Run this in pl/sql mode in SQL Workshop. This procedure will loop through the resume table and
-create themes for all the docs currently in the table.
+- Create all the themes on the docs in the table. Run this in pl/sql mode in SQL Workshop. This procedure will loop through the resume table and create themes for all the docs currently in the table.
 
 ```
 begin
