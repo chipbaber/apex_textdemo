@@ -17,14 +17,6 @@ failed CTXSYS.CTX_QUERY
 
 ```
 grant ctxapp to searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_CLS TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_DDL TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_DOC TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_OUTPUT TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_QUERY TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_REPORT TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_THES TO searchdemo;
-GRANT EXECUTE ON CTXSYS.CTX_ULEXER TO searchdemo;
 ```
 
 ## Create your table to store the resume.
@@ -84,6 +76,13 @@ SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume,
 
 ```
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Eloqua ; code', 1) > 0;
+```
+
+- Second example of proximity search with near operator. Looking for development near creativity within 5 words
+
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume
+WHERE CONTAINS(resume, 'near((development, creativity), 5)', 1) > 0;
 ```
 
 - Fuzzy Search on term.
