@@ -2,13 +2,12 @@
 
 ## Create a Blank Page
 
-
 - Use the following Code in a dynamic pl/sql region.
 
 ```
 declare
 resumeMarkup clob;
---For some reason  character pull of larger than 3913 will fail with error
+--For some reason  character pull of larger than 3913 will fail with error ORA-06502: PL/SQL: numeric or value error: character string buffer too small
 amt INTEGER := 3913;
 pos INTEGER := 1;
 buf VARCHAR2(4000);
