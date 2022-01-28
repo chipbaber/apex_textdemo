@@ -7,10 +7,9 @@
 ```
 declare
 resumeMarkup clob;
---For some reason  character pull of larger than 3913 will fail with error ORA-06502: PL/SQL: numeric or value error: character string buffer too small
-amt INTEGER := 3913;
+amt INTEGER := 8000;
 pos INTEGER := 1;
-buf VARCHAR2(4000);
+buf VARCHAR2(32767);
 len INTEGER;
 remainder INTEGER;
 
@@ -22,25 +21,21 @@ select document into resumeMarkup from filtered_docs where QUERY_ID = :P4_QUERY_
 IF (DBMS_LOB.GETLENGTH(resumeMarkup) = 0) THEN
     HTP.P('Indexing for filtered Markup for document not yet completed, please try again later.');
   ELSE
-    --htp.p('Document Length is' || DBMS_LOB.GETLENGTH(resumeMarkup));
     len := DBMS_LOB.GETLENGTH(resumeMarkup);
 
-    --If Clob length less than 4k max simply pull and print in 1 action.
+    --If Clob length less than 8k max simply pull and print in 1 action.
     IF (DBMS_LOB.GETLENGTH(resumeMarkup) <= amt) THEN
        dbms_lob.read(resumeMarkup, len, pos, buf);
        htp.p(buf);
     --Else loop through till end.
     else
-      -- htp.p('Clob length > 4k');
         --Set the remainder of characters to the length of the clob.
         remainder :=len;
 
         /* iterate through the length of the clob*/
         WHILE pos < len
         loop
-        htp.br;
-        htp.p('Position: '||pos||'   ');   htp.p(' Remainder: '||remainder);
-        htp.br;  
+
         IF (remainder > amt) THEN
         -- print 4k characters
         dbms_lob.read(resumeMarkup, amt, pos, buf);
