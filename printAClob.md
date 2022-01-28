@@ -7,11 +7,11 @@
 ```
 declare
 resumeMarkup clob;
-amt INTEGER := 8000;
+amt INTEGER := 8000; -- max bytes to pull per CLOB in APEX
 pos INTEGER := 1;
-buf VARCHAR2(32767);
+buf VARCHAR2(32767); -- max buffer size per CLOB pull in APEX
 len INTEGER;
-remainder INTEGER;
+
 
 begin
 --Get the resume from Oracle Text filtered_docs table.
@@ -23,40 +23,21 @@ IF (DBMS_LOB.GETLENGTH(resumeMarkup) = 0) THEN
   ELSE
     len := DBMS_LOB.GETLENGTH(resumeMarkup);
 
-    --If Clob length less than 8k max simply pull and print in 1 action.
-    IF (DBMS_LOB.GETLENGTH(resumeMarkup) <= amt) THEN
-       dbms_lob.read(resumeMarkup, len, pos, buf);
-       htp.p(buf);
-    --Else loop through till end.
-    else
-        --Set the remainder of characters to the length of the clob.
-        remainder :=len;
-
         /* iterate through the length of the clob*/
         WHILE pos < len
         loop
-
-        IF (remainder > amt) THEN
-        -- print 4k characters
+        begin
         dbms_lob.read(resumeMarkup, amt, pos, buf);
-
-        else
-        -- print remainder of characters
-        dbms_lob.read(resumeMarkup, remainder, pos, buf);
-        end if;
-        --increment character start range per iteration, then decrease the amount of characters remaining.
-        pos := pos + amt;
-        remainder := remainder - amt;
-
+        pos := pos + amt;      
 
         -- print to APEX
         htp.p(buf);
-
-        end loop;
-    end if;
-
+        EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+             resumeMarkup := EMPTY_CLOB();      
+         END;
+        end loop;  
 end if;
-
 
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
