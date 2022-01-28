@@ -1,9 +1,7 @@
 # How to print a Clob in Oracle APEX 21.1.7
 - Please watch this video for more context on how to showcase a CLOB inside a APEX page. [https://youtu.be/pSw_jFyt5zw](https://youtu.be/pSw_jFyt5zw)
 
-## Create a Blank Page
-
-- Use the following Code in a dynamic pl/sql region.
+- Use the following Code in a dynamic pl/sql region after watching the video.
 
 ```
 declare
