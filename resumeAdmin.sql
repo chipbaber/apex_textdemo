@@ -18,12 +18,13 @@ procedure Batch_Create_Gists;
 procedure Batch_Create_Filtered_Docs;
 
 end resumeAdmin;
-
+/
 
 create or replace package body resumeAdmin as
 
 	/*-----------------------
-	Procedures to truncate a indexing table before creation of a new action on the table.
+	Procedures to truncate a indexing table before creation of a new action on the table passing in the name of the table to truncate inside a
+	dynamic sql statement.
 	-----------------------*/
 procedure Truncate_Table(p_tname in varchar2) is
 	pragma autonomous_transaction;
@@ -36,7 +37,7 @@ begin
 end Truncate_Table;
 
 /*-----------------------
-Procedures to perform a indexing action on a single document.
+Procedures to perform a thematic indexing action on a single document.
 -----------------------*/
 procedure Create_Theme(p_doc_id in resume.doc_id%type) is
 begin
@@ -46,24 +47,33 @@ begin
     DBMS_OUTPUT.PUT_LINE('Error in Create_Theme procedure.');
 end Create_Theme;
 
+/*-----------------------
+Procedures to perform a full thematic indexing action on a single document.
+-----------------------*/
 procedure Create_Full_Theme(p_doc_id in resume.doc_id%type) is
 begin
 	ctx_doc.themes('searchMyDocs', p_doc_id, 'full_themes', p_doc_id, full_themes => true);
 end Create_Full_Theme;
 
+/*-----------------------
+Procedures to perform a gist indexing action on a single document.
+-----------------------*/
 procedure Create_Gist(p_doc_id in resume.doc_id%type) is
 begin
 	 ctx_doc.gist('searchMyDocs', p_doc_id, 'gists',p_doc_id,'P', pov =>'GENERIC');
 end Create_Gist;
 
-
+/*-----------------------
+Procedures to extract the text from a blob of types like pdf or docx and place inside a CLOB table column for faster retrieval.
+-----------------------*/
 procedure Create_Filtered_Doc(p_doc_id in resume.doc_id%type) is
 begin
 	ctx_doc.filter('searchMyDocs', p_doc_id, 'filtered_docs', p_doc_id, plaintext => true);
 end Create_Filtered_Doc;
 
 /*-----------------------
-Procedures to perform a indexing action in a batch fashion on all blobs in a table
+Procedures to perform a indexing action in a batch fashion on all blobs in a table these procedures are basic loops that
+call back to the single document procedure actions above.
 -----------------------*/
 
 procedure Batch_Create_Themes is
@@ -100,3 +110,4 @@ end Batch_Create_Filtered_Docs;
 
 
 end resumeAdmin;
+/

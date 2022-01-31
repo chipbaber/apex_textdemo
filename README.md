@@ -235,6 +235,7 @@ order by doc_id asc;
 
 ```
 begin
+CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
 resumeAdmin.Batch_Create_Themes();
 resumeAdmin.Batch_Create_Full_Themes();
 resumeAdmin.Batch_Create_Gists();
