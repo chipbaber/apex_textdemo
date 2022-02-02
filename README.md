@@ -90,6 +90,12 @@ WHERE CONTAINS(resume, 'near((development, creativity), 5)', 1) > 0;
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '?jav', 1) > 0;
 ```
 
+- Sounds like word - Soundex search
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '!ava', 1) > 0;
+```
+
+
 - Stem search on a term. In this example we are looking for the documents that stem of the word work example would return words like workflow,
 
 ```
