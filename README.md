@@ -72,6 +72,11 @@ CREATE INDEX searchMyDocs ON resume(resume) INDEXTYPE IS CTXSYS.CONTEXT PARAMETE
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'Java', 1) > 0;
 ```
 
+- Find all the documents that have the word java with a score >11 and contain the word nascar.
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '(java > 11) and nascar', 1) > 0;
+```
+
 - Proximity search look for the word **Eloqua** near word **code**  (Requires Chip resume)
 
 ```
@@ -101,6 +106,16 @@ SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume,
 ```
 SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '$work', 1) > 0;
 ```
+
+- Accumulation Search - Best to read this to understand [Accum docs](https://docs.oracle.com/cd/E11882_01/text.112/e24436/cqoper.htm#i997062)
+
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'java ACCUM present', 1) > 0;
+```
+```
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, 'java ACCUM present*3', 1) > 0;
+```
+
 
 - Add More Docs in the apex app. To sync the index execute in this case with 5M of memory
 
