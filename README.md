@@ -1,5 +1,5 @@
 # Oracle APEX Text Demonstration
-This script will outline the steps required to leverage Oracle Text inside and Autonmous Database. Oracle APEX will be reference and leveraged for the creation of a front end application to upload and interact with the core code.
+This script will outline the steps required to leverage Oracle Text inside and Autonomous Database. Oracle APEX will be reference and leveraged for the creation of a front end application to upload and interact with the core code.
 
 ## Create a new workspace in Oracle APEX
 - In this example a workspace with the name **searchdemo** was created. As a part of this creation a database user named search demo was also created.
@@ -13,7 +13,6 @@ This script will outline the steps required to leverage Oracle Text inside and A
 - Navigate to SQL Web Developer and open a session as admin.
 
 - Grant the following to **searchdemo**
-failed CTXSYS.CTX_QUERY
 
 ```
 grant ctxapp to searchdemo;
