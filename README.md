@@ -18,6 +18,12 @@ This script will outline the steps required to leverage Oracle Text inside and A
 grant ctxapp to searchdemo;
 ```
 
+- Query to check and see if the priv is granted. This must be executed from SQL workshop that is part of ATP as admin.
+
+```
+SELECT * FROM DBA_ROLE_PRIVS WHERE GRANTEE = 'searchdemo';
+```
+
 ## Create your table to store the resume.
 
 - this was done with APEX wizard code below
