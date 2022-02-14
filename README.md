@@ -79,7 +79,7 @@ SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume,
 
 - Find all the documents that have the word java with a score >11 and contain the word nascar.
 ```
-SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '(java > 11) and nascar', 1) > 0;
+SELECT SCORE(1), doc_id, title, submitted_by  FROM resume WHERE CONTAINS(resume, '(java > 10) and nascar', 1) > 0;
 ```
 
 - Proximity search look for the word **Eloqua** near word **code**  (Requires Chip resume)
