@@ -1,6 +1,14 @@
 # Oracle APEX Text Demonstration
 This script will outline the steps required to leverage Oracle Text inside and Autonomous Database. Oracle APEX will be reference and leveraged for the creation of a front end application to upload and interact with the core code.
 
+## Video References
+To save time it may be beneficial to watch the following video's related to this content.
+- [How to enable full text search on a docx or pdf](https://youtu.be/hDnb3KFXY8Q)
+- [How to extract text from inside a PDF](https://youtu.be/AfudCHhAHK4)
+- [How to print a CLOB in a Modal Dialog](https://youtu.be/pSw_jFyt5zw)
+- [3 ways to deploy a package in 3 min.](https://youtu.be/U6v6XjJ68X0)
+
+
 ## Create a new workspace in Oracle APEX
 - In this example a workspace with the name **searchdemo** was created. As a part of this creation a database user named search demo was also created.
 
