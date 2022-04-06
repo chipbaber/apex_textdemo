@@ -1,8 +1,8 @@
 # How to Set Session State in APEX via Javascript API
 
-- This Code references this video []() please watch for more details.
+- This Code references this video [https://youtu.be/Lq7pvL8ff4g](https://youtu.be/Lq7pvL8ff4g) please watch for more details.
 
-- Sample Javscript for the Full Text Search with submit
+- Sample Javscript for performing processing inside a dynamic action, then submitting the page and altering page items on submit.
 ```
 let queryTerm =$v("P1_DOC_QUERY");
 let queryType;
@@ -20,20 +20,13 @@ else {
     queryType="Full Text Search on ";
 }
 
-apex.submit(
-{
+apex.submit({
 set:{"P1_FIRSTWORD":null,
 "P1_SECONDWORD":null,
 "P1_PROXIMITY": null,
 "P1_DOC_QUERY":queryTerm,
 "P1_SEARCH_TYPE":queryType},
 showWait: true,
-validate: true,
-}
-
+validate: true}
 );
-```
-
-- Sample Javscript for the Full Text Search with submit
-```
 ```
