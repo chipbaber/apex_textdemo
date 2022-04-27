@@ -17,6 +17,10 @@ select count(*) from resume;
 ```
 alter index SEARCHMYDOCS rebuild online noparallel;
 ```
+or
+```
+CTX_DDL.SYNC_INDEX('searchMyDocs', '5M');
+```
 
 - Requery the CTX_USER_INDEXES view to see the number of indexed docs.
 ![](assets/indexedDocsCheck-7fabc7a3.png)
@@ -26,5 +30,10 @@ select * from CTX_USER_INDEXES where idx_name = 'SEARCHMYDOCS';
 
 - To figure out the number of documents that need to be indexed issue the following query.
 ```
-select IDX_DOCID_COUNT - (select count(*) from resume where resume is not null) "Documents to be Indexed" from CTX_USER_INDEXES where idx_name = 'SEARCHMYDOCS';
+select  (select count(*) from resume where resume is not null) - IDX_DOCID_COUNT "Documents to be Indexed" from CTX_USER_INDEXES where idx_name = 'SEARCHMYDOCS';
+```
+
+- To see number of deletes from index
+```
+select  count(*) from DR$SEARCHMYDOCS$N
 ```
