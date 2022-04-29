@@ -76,6 +76,11 @@ end;
 CREATE INDEX searchMyDocs ON resume(resume) INDEXTYPE IS CTXSYS.CONTEXT PARAMETERS
 ('DATASTORE CTXSYS.DEFAULT_DATASTORE FILTER CTXSYS.AUTO_FILTER FORMAT COLUMN MIMETYPE');
 ```
+- Syntax to sync index every minute
+```
+CREATE INDEX searchMyDocs ON resume(resume) INDEXTYPE IS CTXSYS.CONTEXT PARAMETERS
+('DATASTORE CTXSYS.DEFAULT_DATASTORE FILTER CTXSYS.AUTO_FILTER FORMAT COLUMN MIMETYPE sync (every "freq=secondly;interval=60")')
+```
 
 ## Basic queries of the indexed documentation.
 
