@@ -1,5 +1,7 @@
 # Example Jquery for customizing a single cell inside a Classic Report
 
+Please reference this youtube video for a more detailed explanation of the sample code below. [https://youtu.be/Auw5SoW9TXA](https://youtu.be/Auw5SoW9TXA)
+
 - Create a dynamic action on the classic report. Set the following attributes
 
 ![](assets/classic_cell_formatting-64643eb8.png)
