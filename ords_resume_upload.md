@@ -1,6 +1,6 @@
 ## How to upload a BLOB in ORDS through REST API with parameters.
 
-This how to came at a request from a viewer of the [How to extract text from inside a PDF or Word Doc](https://www.youtube.com/watch?v=AfudCHhAHK4&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=10&t=9s). They wanted to know how to upload documents programmatically to the ATP database. In this tutorial we are leveraging a Oracle Free tier account and Oracle APEX 22.14.
+This how to came at a request from a viewer of the [How to extract text from inside a PDF or Word Doc](https://www.youtube.com/watch?v=AfudCHhAHK4&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=10&t=9s). They wanted to know how to upload documents programmatically to the ATP database. In this tutorial we are leveraging a Oracle Free tier account and Oracle APEX 22.14. You may want to complete the steps to create the table structures in this [https://github.com/chipbaber/apex_textdemo/blob/main/README.md](readme.md) before proceeding below. 
 
 - Inside Oracle APEX, navigate to SQL Worksheet.
 
@@ -174,7 +174,7 @@ DECLARE
 
 ![](assets/ords_resume_upload-b15fea9f.png)
 
-- Click on the body tab and set to binary. Select your resume file. The binary file will map to your pl/sql through the :body bind variable. 
+- Click on the body tab and set to binary. Select your resume file. The binary file will map to your pl/sql through the :body bind variable.
 
 ![](assets/ords_resume_upload-c9bac9b1.png)
 
