@@ -7,6 +7,7 @@ To save time it may be beneficial to watch the following video's related to this
 - [How to extract text from inside a PDF](https://youtu.be/AfudCHhAHK4)
 - [How to print a CLOB in a Modal Dialog](https://youtu.be/pSw_jFyt5zw)
 - [3 ways to deploy a package in 3 min.](https://youtu.be/U6v6XjJ68X0)
+- [How to Create a REST API to Upload a BLOB into an APEX Schema](https://youtu.be/rnqGQrhvhLA)
 
 
 ## Create a new workspace in Oracle APEX
