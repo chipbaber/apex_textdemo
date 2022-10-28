@@ -37,7 +37,7 @@ pos := pos + buf;
 END LOOP;
 
 /*Insert into ADB*/
-insert into stage_xml (XML_COL) values (xmltype.createxml(v_xml)) RETURNING ROWID INTO v_rowid;
+insert into stage_xml (XML_COL, PROCESSED) values (xmltype.createxml(v_xml), 'N') RETURNING ROWID INTO v_rowid;
 
 
 --return post response
