@@ -39,14 +39,13 @@ END LOOP;
 /*Insert into ADB*/
 insert into stage_xml (XML_COL, PROCESSED) values (xmltype.createxml(v_xml), 'N') RETURNING ROWID INTO v_rowid;
 
---empty out the Clob
- v_xml := EMPTY_CLOB();
-
 --return post response
 owa_util.status_line(201, '', false);
 owa_util.mime_header('application/json', true);
 t2 := systimestamp; --get end time
 htp.prn('{"status": "XML Inserted","Row ID":"'||v_rowid||'","Blob File Length Received":"'||blob_length||'","Clob File on Convert":"'||DBMS_LOB.GETLENGTH(v_xml)||',"Elapsed Processing Time(Seconds)":"'||TO_CHAR(t2-t1, 'SSSS.FF')||'"}');
+--empty out the Clob
+ v_xml := EMPTY_CLOB();
 END IF;
 
 EXCEPTION
