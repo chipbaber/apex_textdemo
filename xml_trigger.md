@@ -27,10 +27,10 @@ log procedure to
 create or replace procedure log_action(messageId in varchar2, v_action in varchar2) as
 BEGIN
 insert into processing_log (MESSAGE_ID, ACTION, log_time) values (messageId, v_action, systimestamp);
-commit;
+-- commit;
 EXCEPTION
 WHEN OTHERS
 THEN
-rollback;
+--rollback;
 end;
 ```

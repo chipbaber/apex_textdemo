@@ -101,3 +101,36 @@ ORDERHEADERFK   VARCHAR2(20)
 PREFERREDLANGUAGECODEORDER  VARCHAR2(20)  
 SALUTATION     VARCHAR2(255)
 SALUTATIONORDER  VARCHAR2(20)   
+
+
+
+-- Multi-Item Query for Extended Attributes
+
+```
+SELECT ID, m.messageID, m.customerorderid, m.OMSORDERID, ea.name, ea.description, ea.value
+ FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CUSTOMERORDERID VARCHAR2(255) PATH 'Order/OrderHeader/CustomerOrderId',
+OMSORDERID  VARCHAR2(40)  PATH 'Order/OrderHeader/OMSOrderId'
+) m,
+XMLTABLE('/OrdersToFulfill/Order/OrderDetail/ItemId/ExtendedAttributes'  PASSING STAGE_XML.xml_col COLUMNS
+name varchar2(30) PATH 'Name',
+description varchar2(30) PATH 'Description',
+value varchar2(30) PATH 'Value'
+) ea
+```
+
+-- multi-row parse for INVOICE
+```
+SELECT ID, m.messageID, m.customerorderid, m.OMSORDERID, ia.amounttype, ia.monetaryamount, ia.currencycode
+ FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CUSTOMERORDERID VARCHAR2(255) PATH 'Order/OrderHeader/CustomerOrderId',
+OMSORDERID  VARCHAR2(40)  PATH 'Order/OrderHeader/OMSOrderId'
+) m,
+XMLTABLE('/OrdersToFulfill/Order/OrderHeader/InvoiceAmount'  PASSING STAGE_XML.xml_col COLUMNS
+amounttype varchar2(30) PATH 'Amount/AmountType',
+monetaryamount varchar2(30) PATH 'Amount/MonetaryAmount',
+currencycode varchar2(30) PATH 'Amount/CurrencyCode'
+) ia
+```
