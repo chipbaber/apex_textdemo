@@ -1,9 +1,8 @@
 ## XML Ingestion through ORDS REST API
 
-In this example we will showcase how Oracle ATP can consume XML files through ORDS and store natively inside the database insde the XML data type. We will also show some basic queries on the information.
+In this example we will showcase how Oracle ATP can consume XML files through ORDS and store natively inside the database insde the XML data type. We will also show some basic queries on the information. The ORDS REST service will ingest the .xml file as a binary file and convert row by row to a CLOB form that can be inserted into the XMLtype in the DB.
 
 - Login to APEX and navigate to SQL Workshop. Execute the following SQL to create the stage_xml table.
-
 
 
 ```
@@ -28,7 +27,18 @@ ALTER TRIGGER  "xml_stage_pk" ENABLE
 /
 ```
 
+- Create a new module with the following naming convention.
 
+![](assets/xml_ORDS_ingestion-afb53eb3.png)
+
+- Create a template with the following information.
+
+![](assets/xml_ORDS_ingestion-64290b32.png)
+
+- Create a handler.
+
+![](assets/xml_ORDS_ingestion-d2feee39.png)
+![](assets/xml_ORDS_ingestion-c5e54fd3.png)
 
 
 - Add mime types for the XML Ingestion
@@ -39,6 +49,11 @@ ALTER TRIGGER  "xml_stage_pk" ENABLE
 application/xml,text/xml
 ```
 
+Example Comments
+```
+Post method for xml upload via rest with conversion to xml and insertion into ADB as XMLtype.
+```
+![](assets/xml_ORDS_ingestion-47475732.png)
 
 - Add the following PL/SQL code to ingest the XML as a binary file and convert to CLOB for insertion into the table as the XML type.
 
@@ -108,3 +123,121 @@ EXCEPTION
 
 end;
 ```
+
+-- Navigate back to SQL Workshop, SQL Commands and execute the following query.
+
+![](assets/xml_ORDS_ingestion-e5f9992f.png)
+
+```
+select * from stage_xml
+```
+
+-- Upload the sample xml documents in postman. order1.xml, order2.xml. Please reference this video on how to upload binary documents via postman. [Video](https://youtu.be/rnqGQrhvhLA)
+
+-- Run the query above again to see the xml documents.
+
+![](assets/xml_ORDS_ingestion-472aa6d7.png)
+
+-- In the raw form this information can look complicated, however with relative ease we can query and create views to view the xml information in this form however we require. Create the following views, then query the information to get a better feel for how it works.
+
+-- Example query to view the Message Header information in the XML documents.
+
+```
+create or replace view v_messageheader as
+SELECT ID, MESSAGEHEADER.* FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col
+    COLUMNS
+        std VARCHAR2(30) PATH 'MessageHeader/Standard',
+        headerversion NUMBER(6,2) PATH 'MessageHeader/HeaderVersion',
+        VersionReleaseNumber NUMBER(6,2) PATH 'MessageHeader/VersionReleaseNumber',
+        SourceId varchar2(30) PATH 'MessageHeader/SourceData/SourceId',
+        SourceType varchar2(30) PATH 'MessageHeader/SourceData/SourceType',
+        DestinationId varchar2(30) PATH 'MessageHeader/DestinationData/DestinationId',
+        DestinationType varchar2(30) PATH 'MessageHeader/DestinationData/DestinationType',
+        EventType varchar2(30) PATH 'MessageHeader/EventType',
+        MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+        CorrelationId varchar2(30) PATH 'MessageHeader/MessageData/CorrelationId',
+        CreateDateAndTime varchar2(30) PATH 'MessageHeader/CreateDateAndTime'
+        ) MESSAGEHEADER
+```
+![](assets/xml_ORDS_ingestion-c13cab02.png)
+
+-- Execute the query
+```
+select * from v_messageheader
+```
+
+![](assets/xml_ORDS_ingestion-8919434f.png)
+
+-- Build the Order Header View
+
+```
+create or replace view v_orderheader as
+SELECT ID, ORDERHEADER.* FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CATALOGID   VARCHAR2(255) PATH 'Order/OrderHeader/ExtendedAttributes[Name="CatalogId"]/Value',
+CLIENTID       VARCHAR2(255) PATH 'Order/OrderHeader/ClientId',
+CUSTOMERORDERID VARCHAR2(255) PATH 'Order/OrderHeader/CustomerOrderId',
+FACILITYID  VARCHAR2(255) PATH 'Order/OrderHeader/FacilityId',
+FULFILLMENTCHANNEL VARCHAR2(255) PATH 'Order/OrderHeader/FulfillmentChannel',
+ORDERTYPE         VARCHAR2(255) PATH 'Order/OrderHeader/OrderType',
+OMSORDERID  VARCHAR2(40)  PATH 'Order/OrderHeader/OMSOrderId',
+SPLITORDERINDICATOR   VARCHAR2(255)  PATH 'Order/OrderHeader/SplitOrderIndicator',
+ORDERENTRYDATETIME VARCHAR2(255) PATH 'Order/OrderHeader/OrderEntryDateTime',
+INVOICECREATEDATETIME  VARCHAR2(255) PATH 'Order/OrderHeader/InvoiceCreateDateTime',
+PROMISESHIPDATE      VARCHAR2(255)  PATH 'Order/OrderHeader/PromiseShipDate',
+PROMISERECEIPTDATE  VARCHAR2(255) PATH 'Order/OrderHeader/PromiseReceiptDate',
+LOCALE   VARCHAR2(255) PATH 'Order/OrderHeader/Locale',
+GSI_STORE_ID       VARCHAR2(255) PATH 'Order/OrderHeader/ExtendedAttributes[Name="gsi_store_id"]/Value',
+GSI_CLIENT_ID   VARCHAR2(255)  PATH 'Order/OrderHeader/ExtendedAttributes[Name="gsi_client_id"]/Value'
+) ORDERHEADER
+```
+
+-- Query the view
+
+```
+Select * from v_orderheader
+```
+
+-- Create a Billto view.
+
+```
+create or replace view v_billto as
+SELECT ID, BILLTO.* FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CUSTOMERID  VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/CustomerId',
+FULLNAME    VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/FullName',
+FIRSTNAME   VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/FirstName',
+LASTNAME   VARCHAR2(255)  PATH 'Order/OrderHeader/BillTo/LastName',
+EMAILADDRESS  VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/EmailAddress',
+PREFERREDLANGUAGECODE   VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/PreferredLanguageCode'
+) BillTO
+```
+
+-- Select from the billto view
+```
+select * from v_billto
+```
+
+-- How to select and display repeating xml elements with a primary key. In this example we will display the ExtendedAttributes repeating elements.
+
+```
+create or replace view v_extendedattributes as
+SELECT ID, m.messageID, m.customerorderid, m.OMSORDERID, ea.name, ea.description, ea.value
+ FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CUSTOMERORDERID VARCHAR2(255) PATH 'Order/OrderHeader/CustomerOrderId',
+OMSORDERID  VARCHAR2(40)  PATH 'Order/OrderHeader/OMSOrderId'
+) m,
+XMLTABLE('/OrdersToFulfill/Order/OrderDetail/ItemId/ExtendedAttributes'  PASSING STAGE_XML.xml_col COLUMNS
+name varchar2(30) PATH 'Name',
+description varchar2(30) PATH 'Description',
+value varchar2(30) PATH 'Value'
+) ea
+```
+
+-- Query the view
+```
+10158116186000
+```
+
+--
