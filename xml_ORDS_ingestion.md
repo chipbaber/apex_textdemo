@@ -1,6 +1,6 @@
 ## XML Ingestion through ORDS REST API
 
-In this example we will showcase how Oracle ATP can consume XML files through ORDS and store natively inside the database insde the XML data type. We will also show some basic queries on the information. The ORDS REST service will ingest the .xml file as a binary file and convert row by row to a CLOB form that can be inserted into the XMLtype in the DB.
+In this example we will showcase how Oracle ATP can consume XML files through ORDS and store natively inside the database insde the XML data type. We will also show some basic queries on the information. The ORDS REST service will ingest the .xml file as a binary file and convert row by row to a CLOB form that can be inserted into the XMLtype in the DB. Please watch the following [video](https://youtu.be/JPyVzhQgTV0) before proceeding through this code. 
 
 - Login to APEX and navigate to SQL Workshop. Execute the following SQL to create the stage_xml table.
 
