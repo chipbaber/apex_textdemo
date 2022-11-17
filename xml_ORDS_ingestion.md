@@ -197,6 +197,8 @@ GSI_CLIENT_ID   VARCHAR2(255)  PATH 'Order/OrderHeader/ExtendedAttributes[Name="
 ```
 Select * from v_orderheader
 ```
+![](assets/xml_ORDS_ingestion-a6449a5f.png)
+
 
 -- Create a Billto view.
 
@@ -217,6 +219,7 @@ PREFERREDLANGUAGECODE   VARCHAR2(255) PATH 'Order/OrderHeader/BillTo/PreferredLa
 ```
 select * from v_billto
 ```
+![](assets/xml_ORDS_ingestion-147e05fe.png)
 
 -- How to select and display repeating xml elements with a primary key. In this example we will display the ExtendedAttributes repeating elements.
 
@@ -237,7 +240,29 @@ value varchar2(30) PATH 'Value'
 
 -- Query the view
 ```
-10158116186000
+select * from v_extendedattributes
+```
+![](assets/xml_ORDS_ingestion-9fa40b81.png)
+
+-- Multi-row invoice query
+
+```
+create or replace view invoiceamount as
+SELECT ID, m.messageID, m.customerorderid, m.OMSORDERID, ia.amounttype, ia.monetaryamount, ia.currencycode
+ FROM STAGE_XML, XMLTABLE('/OrdersToFulfill'  PASSING STAGE_XML.xml_col COLUMNS
+MessageId varchar2(30) PATH 'MessageHeader/MessageData/MessageId',
+CUSTOMERORDERID VARCHAR2(255) PATH 'Order/OrderHeader/CustomerOrderId',
+OMSORDERID  VARCHAR2(40)  PATH 'Order/OrderHeader/OMSOrderId'
+) m,
+XMLTABLE('/OrdersToFulfill/Order/OrderHeader/InvoiceAmount'  PASSING STAGE_XML.xml_col COLUMNS
+amounttype varchar2(30) PATH 'Amount/AmountType',
+monetaryamount varchar2(30) PATH 'Amount/MonetaryAmount',
+currencycode varchar2(30) PATH 'Amount/CurrencyCode'
+) ia
 ```
 
---
+-Query the invoice.
+```
+select * from invoiceamount
+```
+![](assets/xml_queries-3de3d3cf.png)
