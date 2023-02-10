@@ -2,9 +2,9 @@
 
 In this example we will take look at a very common scenario in which a business user provides a member of IT a spreadsheet list of data. The list is intended to guide IT on a new report or application action. IT needs to consume the spreadsheet then programmatically generate code that can be leveraged in an application. In this example the core need is for a Oracle Analytics Cloud Data Visualizer Calculation to filter all the rows with certain global id's. 
 
-- Please what this video for details on how to execute the example below. []()
+- Please what this video for details on how to execute the example below. [How to Rapidly Load Data and Generate Code Blocks in APEX](https://youtu.be/CmT2d_UdlC0)
 
-- For this example we will leverage the [example_data.csv](example_data.csv) as our input file.
+- For this example we will leverage the [example_data.csv](https://github.com/chipbaber/apex_textdemo/blob/main/example_data.csv) as our input file.
 
 - Our desired output filter will look like, only it will include :
 
