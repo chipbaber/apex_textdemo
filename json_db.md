@@ -6,14 +6,17 @@ In this short tutorial we will showcase how Oracle APEX can quickly consume and 
 - Query the collection using javascript syntax in SQL Workshop.
 - Create a custom view in SQL Worksheet. 
 
-- To perform these steps the APEX schema user needs to be granted SODA collection from admin.
+- To perform these steps the APEX schema user needs to be granted SODA collection from admin. Execute the query below as your user once logged into SQL*Worksheet. If the priviledge does not exist then you will need to have your Autonomous Admin user grant it to you. 
 ```
+SELECT * FROM USER_ROLE_PRIVS;
+
 grant SODA_APP to SEARCHDEMO;
 ```
 
-- Get Example to get json player data, simple change the player ID number to access and download other json files.
 
+- Get Example to get json player data, simple change the player ID number to access and download other json files.
 http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'
+
 
 - Follow the video to see how to create a collection in APEX. Once created query the base table. 
 ```
@@ -47,6 +50,7 @@ FROM MLB_PLAYERS p where p.json_document.player_info.queryResults."row".jersey_n
 ```
 SELECT ltrim(rtrim(p.json_document.player_info.queryResults."row".twitter_id,'"'),'"') "Twitter Handle" FROM MLB_PLAYERS p;
 ```
+
 - Example SQL Query to get the raw JSON, notes the copyright text for the next segment.
 ```
 SELECT json_serialize(json_document) "RAW_JSON" FROM MLB_PLAYERS;
@@ -58,6 +62,20 @@ SELECT json_serialize(json_document) "RAW_JSON" FROM MLB_PLAYERS;
 SELECT json_transform(JSON_DOCUMENT, REMOVE '$.player_info.copyRight' RETURNING CLOB PRETTY)  FROM MLB_PLAYERS;
 
 SELECT json_transform(JSON_DOCUMENT, INSERT '$.player_info.queryResults.row.homeruns' = '20' format JSON RETURNING CLOB PRETTY) "JSON" FROM MLB_PLAYERS p where p.id = '<add id>';
+
+SELECT json_transform(JSON_DOCUMENT, 
+SET '$.player_info.queryResults.row.age' = 39, SET '$.player_info.queryResults.row.jersey_number' = '"39"'  format JSON RETURNING CLOB PRETTY) "JSON" FROM MLB_PLAYERS p where p.id =  '<add id>';
+
+SELECT p.json_document.player_info.queryResults."row".name_display_first_last "Player Name", 
+p.json_document.player_info.queryResults."row".age "Age",
+p.json_document.player_info.queryResults."row".jersey_number "Jersey Number"
+FROM MLB_PLAYERS p where p.id = '<add id>';
+
+update MLB_PLAYERS p 
+set p.JSON_DOCUMENT = JSON_Transform(JSON_DOCUMENT,
+SET '$.player_info.queryResults.row.age' = 39, 
+SET '$.player_info.queryResults.row.jersey_number' = '"39"'
+) where p.id = '<add id>';
 ```
 
 - When it comes time to update both json_transform and JSON merge can be leveraged to select or update. The example below updates a single record's copyRight text
@@ -71,7 +89,7 @@ select json_mergepatch(p.json_document.player_info.queryResults."row"[0], '{"tea
 
 SELECT json_serialize(json_document) "RAW_JSON" FROM MLB_PLAYERS p where p.id = '<add id>';
 
-UPDATE MLB_PLAYERS p SET json_document.player_info =  json_mergepatch(p.json_document.player_info, '{"copyRight": "Much Shorter copyright"}') where p.id = '<add id>';
+UPDATE MLB_PLAYERS p SET json_document =  json_mergepatch(p.json_document.player_info, '{"copyRight": "Much Shorter copyright"}') where p.id = '<add id>';
 
 SELECT json_serialize(json_document) "RAW_JSON" FROM MLB_PLAYERS p where p.id = '<add id>';
 ```
@@ -172,6 +190,10 @@ BEGIN
 END;
 /
 ```
+- delete Collection
+```
+SELECT DBMS_SODA.drop_collection('MLB_PLAYERS') AS drop_status FROM DUAL;
+```
 
 ## Other more common commands
 - Create a collection called MLB_PLAYERS inside APEX, upload 2 docs. Soda command also below
@@ -179,12 +201,16 @@ END;
 ```
 soda create MLB_PLAYERS
 ```
+
 - Example SODA actions
 ```
-soda get MLB_PLAYERS
+soda list
+soda count MLB_PLAYERS
+soda get MLB_PLAYERS -all
+soda get MLB_PLAYERS -k <add key>
+soda insert MLB_PLAYERS {"name" : "Chip is awesome!"}
+soda get MLB_PLAYERS -k <add key of inserted record>
+soda remove MLB_PLAYERS -k <add key of inserted record>
+soda get MLB_PLAYERS -f {"player_info": {"queryResults": {"row": { "jersey_number": "97" }}}}
 ```
 
-soda commands
-```
-soda list
-```
