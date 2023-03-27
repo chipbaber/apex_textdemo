@@ -1,10 +1,15 @@
-## APEX and SODA Collections 101
-In this short tutorial we will showcase how Oracle APEX can quickly consume and leverage json documents in a matter of minutes. This 101 tutorial will begin with the creation of a SODA collection in SQL Workshop including a Data Load. We will then show how to easily:
-- Append more documents to the collection in SQL workshop
+## Intro to SODA Collections (JSON) in SQL Worksheet
+
+In this short tutorial we will showcase how Oracle APEX (free tier) can quickly consume and leverage json documents in a matter of minutes. This 101 tutorial will begin with the creation of a SODA collection in SQL Workshop including a Data Load. We will then show how to easily:
+
+- Append more documents to the collection in SQL workshop and Database Actions
 - Query the raw json
+- Update Nested JSON elements through JSON_TRANSFORM and JSON_MERGEPATCH
 - Understand and query the default soda collection view in SQL. 
 - Query the collection using javascript syntax in SQL Workshop.
 - Create a custom view in SQL Worksheet. 
+
+We reccomend you watch this video before proceeding through the steps below. [Intro to SODA Collections (JSON) in SQL Worksheet on Oracle APEX](https://youtu.be/kGTdOywjnuo)
 
 - To perform these steps the APEX schema user needs to be granted SODA collection from admin. Execute the query below as your user once logged into SQL*Worksheet. If the priviledge does not exist then you will need to have your Autonomous Admin user grant it to you. 
 ```
@@ -18,7 +23,7 @@ grant SODA_APP to SEARCHDEMO;
 http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'
 
 
-- Follow the video to see how to create a collection in APEX. Once created query the base table. 
+- See the video above to learn how to create a SODA collection in SQL Worksheet. Once created query the base table. 
 ```
 select * from MLB_PLAYERS
 ```
@@ -74,7 +79,7 @@ FROM MLB_PLAYERS p where p.id = '<add id>';
 update MLB_PLAYERS p 
 set p.JSON_DOCUMENT = JSON_Transform(JSON_DOCUMENT,
 SET '$.player_info.queryResults.row.age' = 39, 
-SET '$.player_info.queryResults.row.jersey_number' = '"39"'
+SET '$.player_info.queryResults.row.jersey_number' = '39'
 ) where p.id = '<add id>';
 ```
 
@@ -82,10 +87,6 @@ SET '$.player_info.queryResults.row.jersey_number' = '"39"'
 
 ```
 select json_mergepatch(p.json_document.player_info, '{"copyRight": "Much Shorter copyright"}' RETURNING CLOB PRETTY) "JSON" from MLB_PLAYERS p where p.id = '<add id>'
-
-select json_mergepatch(p.json_document.player_info.queryResults, '{"created": "2024-03-15T09:00:31"}' RETURNING CLOB PRETTY) "JSON" from MLB_PLAYERS p where p.id = '<add id>'
-
-select json_mergepatch(p.json_document.player_info.queryResults."row"[0], '{"team_code": "atl", "jersey_number": "2"}' RETURNING CLOB PRETTY) "JSON" from MLB_PLAYERS p where p.id = '<add id>'
 
 SELECT json_serialize(json_document) "RAW_JSON" FROM MLB_PLAYERS p where p.id = '<add id>';
 
