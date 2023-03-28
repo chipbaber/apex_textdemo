@@ -121,31 +121,68 @@ JSON_TABLE("JSON_DOCUMENT" FORMAT JSON, '$' COLUMNS
 "TWITTER_HANDLE" varchar2(16) path '$.player_info.queryResults.row.twitter_id') JT  
 ```
 
-- Access
+- Query to see the high level information of your collection.
 
 ```
 SELECT * FROM USER_SODA_COLLECTIONS WHERE URI_NAME = 'MLB_PLAYERS';
 ```
 
+- How to delete your collection
+```
+SELECT DBMS_SODA.drop_collection('MLB_PLAYERS') AS drop_status FROM DUAL;
+```
+
 
 ## APEX and SODA Collections 201 REST Access
-In this section we will 
+In this section we will show some of the basis to access the default SODA API's created with a SODA colletion in Oracle APEX. We will focus on:
+
+- Basic Authentication from the command line using curl
+- Setting up postman with basic authentication calls
+- OAuth Setup & PL/SQL examples
+- Postman OAuth configuration
 
 - Curl command to get the latest collections from a schema
 ```
 curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest
 ```
 
-- Generate a OAuth Token
+- Curl command to create a collection called ChipsCollection
+```
+curl -X PUT -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/ChipsCollection
+```
+
+- Curl command to delete a collection called ChipsCollection
+```
+curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/ChipsCollection
+```
+
+- Curl command to insert a document as a binary into a collection
+```
+curl -X POST -u 'SEARCHDEMO:<password>' --data-binary @/C:/temp/json_mlb/valeri.json -H "Content-Type: application/json" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS
+```
+
+- Curl command to get a individual document based on the document id
+```
+curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS/<add doc id>
+```
+
+- Curl command to delete a individual document
+```
+curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS/<add doc id>
+```
+
+- Below is example code to create a OAUTH client called player_dev for the developer Chip Baber. Generate a OAuth Token
 ```
 BEGIN
   OAUTH.create_client(
     p_name            => 'player_dev',
     p_grant_type      => 'client_credentials',
     p_owner           => 'Chip Baber',
-    p_description     => 'A client for developer cbaber',
-    p_support_email   => 'chipbaber@yahoo.com',
-    p_privilege_names => 'player_priv'
+    p_description     => 'A client for developer cbaber to access the SODA API',
+    p_support_email   => 'support@fakecompany.com',
+    p_privilege_names => 'player_priv',
+    p_redirect_uri => 'https://',
+    p_support_uri => ' '
   );
  
   OAUTH.grant_client_role(
@@ -191,13 +228,9 @@ BEGIN
 END;
 /
 ```
-- delete Collection
-```
-SELECT DBMS_SODA.drop_collection('MLB_PLAYERS') AS drop_status FROM DUAL;
-```
 
-## Other more common commands
-- Create a collection called MLB_PLAYERS inside APEX, upload 2 docs. Soda command also below
+## Example SODA Commands
+- These commands will not execute inside SQL Worksheet but will inside Database Actions. 
 
 ```
 soda create MLB_PLAYERS
