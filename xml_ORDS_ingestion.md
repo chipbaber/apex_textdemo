@@ -75,7 +75,7 @@ v_rowid VARCHAR2(100);
 
 BEGIN
 -- put raw blob into variable
-v_content := :BODY;
+v_content := :body;
 blob_length := DBMS_LOB.GETLENGTH(v_content);
 --if empty xml file pushed into REST throw error
 IF v_content IS NULL

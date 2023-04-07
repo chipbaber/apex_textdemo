@@ -138,8 +138,6 @@ In this section we will show some of the basis to access the default SODA API's 
 
 - Basic Authentication from the command line using curl
 - Setting up postman with basic authentication calls
-- OAuth Setup & PL/SQL examples
-- Postman OAuth configuration
 
 - Curl command to get the latest collections from a schema
 ```
@@ -170,7 +168,7 @@ curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.
 ```
 curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS/<add doc id>
 ```
-
+## APEX OATUH in ORDS for SODA Collections 202 REST Access
 - Below is example code to create a OAUTH client called player_dev for the developer Chip Baber. Generate a OAuth Token
 ```
 BEGIN
