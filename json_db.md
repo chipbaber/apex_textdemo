@@ -140,6 +140,7 @@ In this section we will show some of the basis to access the default SODA API's 
 - Setting up postman with basic authentication calls
 
 - Curl command to get the latest collections from a schema
+
 ```
 curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest
 ```
@@ -159,7 +160,7 @@ curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.a
 curl -X POST -u 'SEARCHDEMO:<password>' --data-binary @/C:/temp/json_mlb/valeri.json -H "Content-Type: application/json" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS
 ```
 
-- Curl command to get a individual document based on the document id
+- Curl command to get a individual document based on the document id (ex. doc id - F79DA23912B74E369C36C8F020602A34)
 ```
 curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS/<add doc id>
 ```
@@ -169,7 +170,31 @@ curl -X GET -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.
 curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest/MLB_PLAYERS/<add doc id>
 ```
 ## APEX OATUH in ORDS for SODA Collections 202 REST Access
-- Below is example code to create a OAUTH client called player_dev for the developer Chip Baber. Generate a OAuth Token
+In this section we are going to show how to: 
+- Create oauth token for a developer in pl/sql
+- 
+
+- In SQL Workshop take a look at the user_ords_clients view structure
+```
+desc user_ords_clients;
+```
+
+- Query the table to see if any clients are existing. 
+```
+select * from user_ords_clients;
+select * from user_ords_client_privileges;
+select * from user_ords_client_roles;
+```
+
+- Query the user_ords_roles view, priviledges view, priviledge roles view
+```
+select * from user_ords_roles;
+select * from user_ords_privileges;
+select * from user_ords_privilege_roles;
+select * from user_ords_privilege_mappings;
+```
+
+- Below is example code to create a OAUTH client called player_dev for the developer Chip Baber. Generate a OAuth Token.
 ```
 BEGIN
   OAUTH.create_client(
@@ -178,9 +203,9 @@ BEGIN
     p_owner           => 'Chip Baber',
     p_description     => 'A client for developer cbaber to access the SODA API',
     p_support_email   => 'support@fakecompany.com',
-    p_privilege_names => 'player_priv',
-    p_redirect_uri => 'https://',
-    p_support_uri => ' '
+    p_privilege_names => 'oracle.soda.privilege.developer',
+    p_redirect_uri => 'https://fakecompany.com/404',
+    p_support_uri => 'https://fakecompany.com/support'
   );
  
   OAUTH.grant_client_role(
@@ -196,7 +221,8 @@ BEGIN
 END;
 /
 ```
-- query in APEX
+- Query in SQL Worksheet to get the client_id and client_secret. Copy these values. 
+
 ```
 SELECT id, name, client_id, client_secret FROM user_ords_clients;
 ```
@@ -204,10 +230,11 @@ SELECT id, name, client_id, client_secret FROM user_ords_clients;
 - Collect your Client ID and Client Secret
 ![image of query](/assets/2023-03-13-10-43-58.png)
 
-- Grab the access token
+- Insert the client id and client secret into the curl statement below to get your oauth token. 
 ```
-curl -i -k --user <add>:<add> --data "grant_type=client_credentials" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/oauth/token
+curl -i -k --user <client id>:<client secret> --data "grant_type=client_credentials" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/oauth/token
 
+curl -i -k --user DEOMyQBpaL2eqBq4BVHcPA..:5qexV2lqmU7O7HLRRUC7Gg.. --data "grant_type=client_credentials" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/oauth/token
 ```
 ![](/assets/2023-03-13-10-55-44.png)
 
