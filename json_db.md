@@ -171,8 +171,8 @@ curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.a
 ```
 ## APEX OATUH in ORDS for SODA Collections 202 REST Access
 In this section we are going to show how to: 
-- Create oauth token for a developer in pl/sql
-- 
+- Create oauth token of type client_credentials for a developer in pl/sql
+-  
 
 - In SQL Workshop take a look at the user_ords_clients view structure
 ```
@@ -182,16 +182,6 @@ desc user_ords_clients;
 - Query the table to see if any clients are existing. 
 ```
 select * from user_ords_clients;
-select * from user_ords_client_privileges;
-select * from user_ords_client_roles;
-```
-
-- Query the user_ords_roles view, priviledges view, priviledge roles view
-```
-select * from user_ords_roles;
-select * from user_ords_privileges;
-select * from user_ords_privilege_roles;
-select * from user_ords_privilege_mappings;
 ```
 
 - Below is example code to create a OAUTH client called player_dev for the developer Chip Baber. Generate a OAuth Token.
@@ -201,7 +191,7 @@ BEGIN
     p_name            => 'player_dev',
     p_grant_type      => 'client_credentials',
     p_owner           => 'Chip Baber',
-    p_description     => 'A client for developer cbaber to access the SODA API',
+    p_description     => 'A client for developer cbabers machine to access the SODA API',
     p_support_email   => 'support@fakecompany.com',
     p_privilege_names => 'oracle.soda.privilege.developer',
     p_redirect_uri => 'https://fakecompany.com/404',
@@ -234,7 +224,6 @@ SELECT id, name, client_id, client_secret FROM user_ords_clients;
 ```
 curl -i -k --user <client id>:<client secret> --data "grant_type=client_credentials" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/oauth/token
 
-curl -i -k --user DEOMyQBpaL2eqBq4BVHcPA..:5qexV2lqmU7O7HLRRUC7Gg.. --data "grant_type=client_credentials" https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/oauth/token
 ```
 ![](/assets/2023-03-13-10-55-44.png)
 
@@ -242,6 +231,17 @@ curl -i -k --user DEOMyQBpaL2eqBq4BVHcPA..:5qexV2lqmU7O7HLRRUC7Gg.. --data "gran
 ```
 curl -i -H "Authorization: Bearer <add bearer token>" -X GET  https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/searchdemo/soda/latest
 ```
+
+- Query these additional views to see how the pl/sql above relates inside the database. 
+```
+select * from user_ords_client_privileges;
+select * from user_ords_client_roles;
+select * from user_ords_roles;
+select * from user_ords_privileges;
+select * from user_ords_privilege_roles;
+select * from user_ords_privilege_mappings;
+```
+
 
 - Delete Client
 ```
