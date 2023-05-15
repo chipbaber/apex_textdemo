@@ -172,7 +172,7 @@ curl -X DELETE -u 'SEARCHDEMO:<password>' https://ayxzx2tnd0tqzed-sluggersapex.a
 ## APEX OATUH in ORDS for SODA Collections 202 REST Access
 In this section we are going to show how to: 
 - Create oauth token of type client_credentials for a developer in pl/sql
--  
+
 
 - In SQL Workshop take a look at the user_ords_clients view structure
 ```
