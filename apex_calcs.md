@@ -2,15 +2,15 @@
 
 In this brief tutorial we will take a look at three approaches for replicating excel calculations inside Oracle APEX. The first will focus on end users, enabling access to data online and providing out of the box functionality to create calculations. The second is a bit more advanced and will leverage SQL Worksheet to create virtual columns on the core table with equations that calculate on query. The third is the most advanced and showcases how to create a function for a calculation. Functions will enable you to pull information from other tables (tabs in excel) and easily calculate results.
 
-### Example 1: Oracle APEX: Replicate an Excel Calculation inside a Interactive Report
+### Example 1: Oracle APEX: Replicate an Excel Calculation inside an Interactive Report
 We will begin by taking a look at a sample excel spreadsheet called Fall_Stats.xlsx. We will make a copy as a .csv, remove the calculation columns and upload into Oracle APEX. Once uploaded we will create a new page in a sample application with a interactive report. Inside the interactive report we will show you how a end user can easily replicate a calculation in excel inside Oracle APEX. We will also showcase how one can save calculations in personal versions of the interactive report for future use. 
 
-If you would like to follow along in this tutorial please access the sample excel here [](). Please watch this tutorial video. 
+If you would like to follow along in this tutorial please access the sample excel here [https://youtu.be/bB6Yxb5uNRY](https://youtu.be/bB6Yxb5uNRY). Please watch this tutorial video. 
 
 ### Example 2: Oracle APEX: Replicating Excel Calculation with Virtual Columns
 In our example we could use this table in many parts of a application. Lets take a look at how an Oracle APEX developer can replicate excel calculations at the table level inside Oracle virtual columns. We wil start by repeating our simple batting average calculation from Example 1. Then add two slightly more advanced calculations for on base percentage (OBP) and slugging (SLG). Last but not least we will touch on a limitation of this approach. You are not able to leverage virtual columns inside other virtual column calculations. For example the baseball stat OPS is a combination of both OBP and SLG. Trying to calculate this as a virtual column will generate a  ORA-54012. Don't worry though, part three of this series shows how to build for scenarios like this leveraging Oracle functions. 
 
-Please watch the following video for more guidance. 
+Please watch the following video for more guidance. [https://youtu.be/4pj9-q-3dG0](https://youtu.be/4pj9-q-3dG0)
 
 ```
 select * from teamstats
