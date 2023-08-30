@@ -2,7 +2,7 @@
 
 In this example we will show you how to leverage CSS selectors inside APEX classic reports to hide null values. We will start with a classic report that has a url inside one of the columns but has a number of null values. 
 
-We reccomend watching this video as the guide for the steps below. (How to Remove Null Links Inside APEX Reports with CSS Selectors){https://youtu.be/vyxFeww1XyM}
+We reccomend watching this video as the guide for the steps below. [How to Remove Null Links Inside APEX Reports with CSS Selectors](https://youtu.be/vyxFeww1XyM)
 
 ![](assets/2023-08-30-08-56-18.png)
 
@@ -11,7 +11,7 @@ Next we will convert this column to a link and leverage the APEX icon catalog to
 
 The APEX icon library can be found here.
 
-(APEX Video Icon)[https://apex.oracle.com/pls/apex/r/apex_pm/ut/icons]
+[APEX Video Icon](https://apex.oracle.com/pls/apex/r/apex_pm/ut/icons)
 
 ![](assets/2023-08-30-09-04-10.png)
 
