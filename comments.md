@@ -89,4 +89,92 @@ end commentsTrigger;
 /
 ```
 
-- The next part of this tutorial assumes the user has the knowledge to create an application, a page and a report. The tutorial starts with that in place. For this example we will leverage a classic report
+- The next part of this tutorial assumes the user has the knowledge to create an application, a page and a report. The tutorial starts with that in place. If you are not familiar it may be good to reference this tutorial. [https://youtu.be/bB6Yxb5uNRY](https://youtu.be/bB6Yxb5uNRY) For this example we will leverage a classic report but the same could apply to a interactive report as well. 
+
+- Open your application and create a new page.
+![](assets/2023-09-22-14-28-05.png)
+
+- Select the form option.
+![](assets/2023-09-22-14-28-58.png)
+
+- Name the form, set it to be a Modal Dialog then select the comments table you created earlier. Make sure to remember the assigned page number.
+![](assets/2023-09-22-14-30-33.png)
+
+- In the next prompt leave the primary key as the field c_id and create the page.
+![](assets/2023-09-22-14-31-59.png)
+
+- Select the fields highlighted in green below and set there type as hidden. We are going to start with the most basic comment form we can. These fields could be leveraged at future dates for more complex comments designs. We reccomend you watch [Intro to the APEX Comments Theme Component Video](https://youtu.be/4Dl6_2wX-oE) if you need an example. 
+
+![](assets/2023-09-22-14-34-52.png)
+
+![](assets/2023-09-22-14-35-12.png)
+
+- Right click on the Content Body and create a region. 
+![](assets/2023-09-22-14-37-28.png)
+
+- Name the region, then set the type to comments. 
+![](assets/2023-09-22-14-38-31.png)
+
+- Set the source table and the where clause. In our example each row in the table will represent a player ID. The where clause will filter to just the comments on that player. 
+![](assets/2023-09-22-14-40-51.png)
+
+- Click on the attributes tab. Then set the comment text, user name and date fields. 
+![](assets/2023-09-22-14-42-56.png)
+![](assets/2023-09-22-14-43-31.png)
+
+- Save your page. 
+![](assets/2023-09-22-14-44-24.png)
+
+- In your comment region right click on actions and create a new action. We will use this to edit our comments.  
+![](assets/2023-09-22-14-46-03.png)
+
+- For the new action set the values illustrated below. 
+![](assets/2023-09-22-14-47-25.png)
+
+- Click on No link defined. Then set the following parameters. You page number should be the modal form page number you recorded earlier. We will set the comment id, to the row we want to edit, clear the cache and return to the page. 
+![](assets/2023-09-22-14-48-04.png)
+![](assets/2023-09-22-14-49-29.png)
+
+- Next we want to set a server side condition that only displays the edit action when the logged in user was the commentor. Basically we only want to be able to edit our own comments not others. 
+![](assets/2023-09-22-14-52-36.png)
+
+- Now we are ready to link your report to your comments page and form. To do this navigate in APEX to the page where your report exists. Right click on the columns drop down and create a new virtual column. 
+![](assets/2023-09-22-14-56-55.png)
+
+- Name the header of the virtual column "Comments". 
+![](assets/2023-09-22-14-58-17.png)
+
+- Select No Link Defined, and set it to route the page number of our midal form. Set the player_id to the #JERSEY# number, in our example the unique identifier for our comments. 
+![](assets/2023-09-22-14-58-47.png)
+
+![](assets/2023-09-22-15-01-29.png)
+
+- Paste in the HTML below to create a icon for the virtual column, enabling a user to click on it. 
+```
+<span class="fa fa-comment-o" aria-hidden="true"></span>
+```
+![](assets/2023-09-22-15-05-34.png)
+
+- Save and run your page. You should see the comments icon and when clicked it will open your form to comment on the player. 
+
+![](assets/2023-09-22-15-13-00.png)
+
+![](assets/2023-09-22-15-14-30.png)
+
+- Enter a comment, press create. Then re-open the comment window. 
+![](assets/2023-09-22-15-15-06.png)
+
+- You should see your new comment. 
+![](assets/2023-09-22-15-15-54.png)
+
+- Press the edit link and modify your comment. Notice the form updates and you can now edit the text. 
+![](assets/2023-09-22-15-17-38.png)
+
+- Make a change and press apply. 
+![](assets/2023-09-22-15-18-44.png)
+
+- Reopen to see the comment has updated. 
+![](assets/2023-09-22-15-19-11.png)
+
+- If you log in as another user you can see that the edit button only appears for your comments. 
+![](assets/2023-09-22-15-21-29.png)

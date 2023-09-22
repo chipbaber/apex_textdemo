@@ -5,7 +5,7 @@ In this brief tutorial we will take a look at three approaches for replicating e
 ### Example 1: Oracle APEX: Replicate an Excel Calculation inside an Interactive Report
 We will begin by taking a look at a sample excel spreadsheet called Fall_Stats.xlsx. We will make a copy as a .csv, remove the calculation columns and upload into Oracle APEX. Once uploaded we will create a new page in a sample application with a interactive report. Inside the interactive report we will show you how a end user can easily replicate a calculation in excel inside Oracle APEX. We will also showcase how one can save calculations in personal versions of the interactive report for future use. 
 
-If you would like to follow along in this tutorial please access the sample excel here [](). 
+If you would like to follow along in this tutorial please access the sample excel here [https://github.com/chipbaber/apex_textdemo/blob/main/assets/teamstats.xlsx](https://github.com/chipbaber/apex_textdemo/blob/main/assets/teamstats.xlsx). 
 
 Please watch this tutorial video. [https://youtu.be/bB6Yxb5uNRY](https://youtu.be/bB6Yxb5uNRY)
 
