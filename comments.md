@@ -118,10 +118,11 @@ end commentsTrigger;
 ![](assets/2023-09-28-10-36-41.png)
 
 - Select the CSV file when prompted. Then click load data.
- 
+
 ![](assets/2023-09-28-10-37-58.png)
 
 - The next part of this tutorial assumes the user has the knowledge to create an application, a page and a report. The tutorial starts with that in place. If you are not familiar it may be good to reference this tutorial. [https://youtu.be/bB6Yxb5uNRY](https://youtu.be/bB6Yxb5uNRY) For this example we will leverage a classic report but the same could apply to a interactive report as well. 
+
 
 - Open your application and create a new page.
 ![](assets/2023-09-22-14-28-05.png)
@@ -147,7 +148,7 @@ end commentsTrigger;
 - Name the region, then set the type to comments. 
 ![](assets/2023-09-22-14-38-31.png)
 
-- Set the source table and the where clause. In our example each row in the table will represent a player ID. The where clause will filter to just the comments on that player. 
+- Set the source table and the where clause. In our example each row in the table will represent a player ID. The where clause will filter to just the comments on that player. Please note the P5 variable passing in could change based on your page number for your modular form. 
 ![](assets/2023-09-22-14-40-51.png)
 
 - Click on the attributes tab. Then set the comment text, user name and date fields. 
@@ -167,7 +168,10 @@ end commentsTrigger;
 ![](assets/2023-09-22-14-48-04.png)
 ![](assets/2023-09-22-14-49-29.png)
 
-- Next we want to set a server side condition that only displays the edit action when the logged in user was the commentor. Basically we only want to be able to edit our own comments not others. 
+Please note the &CI_ID. variable is pulled from the comments theme component. 
+![](assets/2023-10-10-09-32-46.png)
+
+- Next we want to set a server side condition that only displays the edit action when the logged in user was the commentor. Basically we only want to be able to edit our own comments not others. Save your page after setting this variable. 
 ![](assets/2023-09-22-14-52-36.png)
 
 - Now we are ready to link your report to your comments page and form. To do this navigate in APEX to the page where your report exists. Right click on the columns drop down and create a new virtual column. 
@@ -210,3 +214,11 @@ end commentsTrigger;
 
 - If you log in as another user you can see that the edit button only appears for your comments. 
 ![](assets/2023-09-22-15-21-29.png)
+
+- Run the code below to clean up your tables created in this example.
+
+```
+drop trigger commentsTrigger;
+drop table comments;
+drop table teamstats;
+```
