@@ -31,7 +31,7 @@ from dual
 
 ## Building Row Level Comments on a Report with the Oracle APEX Comments Theme Component 
 
-Please watch the following video before proceeding through the sample Code below. [Add](https://add) The following steps were performed in an Oracle Autonomous Database on a free tier account leveraging APEX 23.1.2 at the time of the recording. 
+Please watch the following video before proceeding through the sample Code below. [How to Add Row Level Comments to a APEX Report](https://youtu.be/5iqmxavQD08) The following steps were performed in an Oracle Autonomous Database on a free tier account leveraging APEX 23.1.2 at the time of the recording. 
 
 - Navigate to SQL Worshop -> SQL Commands and execute the following to create a new table to hold our comments. Please note this is a sample table with the basics for the comments theme component. Highlight each command and click run or copy and paste one at a time. We will also create a teamstats table as illustrated in the video above. 
 
@@ -100,7 +100,7 @@ begin
         :new.comment_date := systimestamp;
         :new.commenter := coalesce(sys_context('APEX$SESSION','APP_USER'),user);
     end if;
-    :new.comment_date := sysdate;
+    :new.comment_date := systimestamp;
     :new.commenter := coalesce(sys_context('APEX$SESSION','APP_USER'),user);
 end commentsTrigger;
 /
