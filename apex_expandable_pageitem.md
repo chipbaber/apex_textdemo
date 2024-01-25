@@ -1,9 +1,9 @@
 ### Oracle APEX Expandable Page Item Text
-In this tutorial we will illustrate one way to create expand/collapseable text inside a page item in Oracle APEX. The demonstration was developed on Oracle Autonomous Transaction Processing leveraging Oracle APEX 23.2.1. This tutorial assumes some basic APEX knowledge is present. That a user has a workspace, the ability to create an application and page inside the application.
+In this video we will illustrate one way to create expand/collapsible text inside a display only page item in Oracle APEX. This is very useful if a developed is working with long varchar2 or CLOB values and wants to keep a clean UI when displaying information on a custom page. The demonstration was developed on Oracle Autonomous Transaction Processing leveraging Oracle APEX 23.2.1 on Oracle Cloud Infrastructure.  This tutorial assumes some basic APEX knowledge is present. That a user has a workspace, the ability to create an application and page inside the application.
 
 ## Step 1: Watch Youtube Demonstration
 To start we reccomend watching the following youtube video before following the instructions below. 
-[ Add Link](Add Label)
+[https://youtu.be/VXih0-R3m8I](https://youtu.be/VXih0-R3m8I)
 
 ## Step 2: Follow Steps to Create Expand/Collapsable page Item
 
