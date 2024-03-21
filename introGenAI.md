@@ -1,11 +1,12 @@
-## Enhancing APEX Apps Dynamic Action Gen AI Calls
+## Enhancing Oracle APEX Applications with Dynamic Action Gen AI Calls
+This demo is a intro to embedding the OCI GenAI service into Oracle APEX for developers. The video begins with a simple form that on LOV change dynamically showcases a new image based on the LOV selection. We will enhance this application with GenAI so that information about the players career batting average is returned along with the image. The demo will showcase how to gather the required OCIDs to create a APEX web credintial to connect to the GenAI service. Once collected we will add a step to the existing dynamic action that calls a pl/sql code block. Inside the code block we will form a REST POST payload passing in the player selected information along with the model we wish to call and parameters to limit the size of the response. The code block includes specific debug commands that will highlight the post payload, the REST response payload and the dynamic formation of a query leveraging the pl/sql JSON_TABLE functionality to easily query the response payload and extract just the required GenAI text. We will then iterate through the result and update the APEX page item with the text. The example video will also showcase how easy it is to swap models and quickly adjust your json_table query to receive the desired text given varations in the REST response payload format. 
 
-- I encourage you to watch the following video(s) and reference this blog before attempting to follow the technical path below. 
-[]()
+I encourage you to watch the following video(s) and reference this blog before attempting to follow the technical hands on path below. 
+[Enhancing Oracle APEX Applications with Dynamic Action Gen AI Calls](https://youtu.be/tltLxGa5AtU)
 
 [How to Dynamically Show a Image on Select List Change without Page Submit in Oracle APEX](https://www.youtube.com/watch?v=MpxrqEbpgc8&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=16&pp=gAQBiAQB) 
 
-[APEX Meets Gen AI](https://blogs.oracle.com/apex/post/building-innovative-qa-experiences-oracle-apex-meets-oci-generative-ai)
+[APEX Meets Gen AI Blog](https://blogs.oracle.com/apex/post/building-innovative-qa-experiences-oracle-apex-meets-oci-generative-ai)
 
 At the time of this recording the genAI service was only available in the chicago region. The solution shown leveraged ATP free tier in Ashburn along with genAI in chicago in another tennancy. There are other potential ways this could be accomplished, Select AI for example. We chose to leverage the genAI service through a Web Credential and enhance a APEX application as it feels like most organizations in time will want to choose and fine tune the LLM model that best fits there needs in time. Not everything will be documented in this particular markdown page, given the length of the video. However I will include enough sample code to enable you to follow along if you have an existing APEX workspace, application and developer priviledges. You will also need access to the OCI Gen AI service. 
 
@@ -87,9 +88,7 @@ v_genAI_post_payload varchar2(3000);
 CURSOR genai_response IS SELECT jt.* FROM JSON_TABLE(v_genai_response, '$' COLUMNS (text VARCHAR2(4000)  PATH '$.inferenceResponse[0].generatedTexts[0].text' )) jt; 
 
 BEGIN
-select 'What is'||playername||s career batting average?' into v_input from players where card_url = :P1_PLAYER;
-
---:P1_PLAYERSTATS := v_input;
+select 'What is '||playername||'s career batting average?' into v_input from players where card_url = :P1_PLAYER;
 
 v_genAI_post_payload := '{ 
             "inferenceRequest": {
@@ -144,11 +143,46 @@ end if;
 END;
 ```
 
+- View the debug and analyze json_table query. In SQL Workshop. 
+```
+SELECT jt.* 
+FROM JSON_TABLE('{"modelId":"cohere.command-light","modelVersion":"15.6","inferenceResponse":{"runtimeType":"COHERE","generatedTexts":[{"id":"059468e0-02f7-49f9-a86c-c3c4c13291f5","text":" Henderson''s career batting average was .294. \n\nWould you like me to provide more details about Ricky Henderson''s career statistics or explain why his batting average was relatively low or high? ","likelihood":-0.3422786295413971,"tokenLikelihoods":[{"token":" Henderson","likelihood":-0.8517012},{"token":"''s","likelihood":-0.17626235},{"token":" career","likelihood":-0.51479936},{"token":" batting","likelihood":-0.0072648134},{"token":" average","likelihood":-0.0020083846},{"token":" was","likelihood":-0.036331233},{"token":" .","likelihood":-0.00265637},{"token":"294","likelihood":-1.5848691},{"token":".","likelihood":-0.2716945},{"token":" \n","likelihood":-1.6289217},{"token":"\n","likelihood":-0.0029089635},{"token":"Would","likelihood":-0.56252754},{"token":" you","likelihood":-1.0796247E-4},{"token":" like","likelihood":-0.0074417647},{"token":" me","likelihood":-0.6445085},{"token":" to","likelihood":-0.0044347243},{"token":" provide","likelihood":-0.042083845},{"token":" more","likelihood":-0.020632144},{"token":" details","likelihood":-0.6007463},{"token":" about","likelihood":-0.31430078},{"token":" Ricky","likelihood":-0.03574606},{"token":" Henderson","likelihood":-0.0022912815},{"token":"''s","likelihood":-0.030059556},{"token":" career","likelihood":-0.22591756},{"token":" statistics","likelihood":-1.1783049},{"token":" or","likelihood":-0.051513657},{"token":" explain","likelihood":-1.4136363},{"token":" why","likelihood":-0.29935718},{"token":" his","likelihood":-0.26685745},{"token":" batting","likelihood":-0.003990047},{"token":" average","likelihood":-0.002725757},{"token":" was","likelihood":-0.6094633},{"token":" relatively","likelihood":-1.1301836},{"token":" low","likelihood":-0.31454527},{"token":" or","likelihood":-0.042613275},{"token":" high","likelihood":-0.0015791744},{"token":"?","likelihood":-0.1208109},{"token":" ","likelihood":-7.9217425E-4}]}],"timeCreated":"2024-03-15T13:39:54.203Z"}}', 
+'$' COLUMNS(text VARCHAR2(4000) PATH '$.inferenceResponse[0].generatedTexts[0].text' )) jt
+```
+
 - Show how to extract other values from the JSON. Grab Model ID
 ```
  model_id VARCHAR2(4000) PATH '$.inferenceResponse[0].generatedTexts[0].id'
 ```
 
+- Now we will update the model to use  the llama model. Llama API link is below for your reference. 
+[https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/LlamaLlmInferenceRequest](https://docs.oracle.com/en-us/iaas/api/#/en/generative-ai-inference/20231130/datatypes/LlamaLlmInferenceRequest)
 
-- Link to jsonl validator
-https://jsonlines.org/validator/
+- Alter the v_genAI_post_payload variable in the script above to include the following post parameters to call the llama model. 
+```
+    v_genAI_post_payload := '{ 
+            "inferenceRequest": {
+                    "runtimeType": "LLAMA",
+                     "prompt": "'||v_input||'",
+                     "maxTokens": 200,
+                     "numGenerations": 1,
+                     "isEcho": false,                     
+                     "isStream": false
+            }, 
+            "servingMode": { 
+                "servingType": "ON_DEMAND",
+                "modelId": "meta.llama-2-70b-chat"
+            }, 
+            "compartmentId": "<add your compartment id>"
+    }';
+```
+
+- Alter the json query path to read the llama output. 
+```
+PATH '$.inferenceResponse[0].choices[0].text'
+```
+
+- Below are links to other videos that could be of help as you work with longer text blocks and genAI. 
+[Oracle APEX: Develop Expandable Text Blocks on Page Items](https://www.youtube.com/watch?v=VXih0-R3m8I&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=3&t=10s&pp=gAQBiAQB)
+
+[How to Print a CLOB inside a Modal Dialog Window in Oracle APEX](https://www.youtube.com/watch?v=pSw_jFyt5zw&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=32&pp=gAQBiAQB)
