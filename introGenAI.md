@@ -182,7 +182,8 @@ FROM JSON_TABLE('{"modelId":"cohere.command-light","modelVersion":"15.6","infere
 PATH '$.inferenceResponse[0].choices[0].text'
 ```
 
-- Below are links to other videos that could be of help as you work with longer text blocks and genAI. 
+- Below are links to other videos that could be of help as you work with longer text blocks and genAI.
+ 
 [Oracle APEX: Develop Expandable Text Blocks on Page Items](https://www.youtube.com/watch?v=VXih0-R3m8I&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=3&t=10s&pp=gAQBiAQB)
 
 [How to Print a CLOB inside a Modal Dialog Window in Oracle APEX](https://www.youtube.com/watch?v=pSw_jFyt5zw&list=PLsnBif_-5JnA8Hzvp8e1bQ3fo6VEvYEB0&index=32&pp=gAQBiAQB)
