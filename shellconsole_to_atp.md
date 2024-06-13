@@ -1,7 +1,7 @@
-## How to connect OCI shell console to ATP and Access APEX Schema
+## Connect your OCI Shell Console to an Autonomous Database in 3 min.
 Are you curious on how to connect to your autonmous database from the OCI shell console? Perhaps you have an APEX schema and want to run SQL*PLus to look at the data inside autonomous? The fastest way to easily connect via SQL*Plus to Oracle Autonmous Database for quick developed access is through the OCI Shell Console. This video is designed for developed to show you how in just 3 minutes you can download your autonomous database wallet, modify the sqlnet.ora and .bash_profile then login via SQL*Plus and begin to query your database. This video assumes your autonomous database is already provisioned. 
 
-Please watch this video before going through the Code Samples below []()
+Please watch this video before going through the Code Samples below [https://youtu.be/ts76gocXLe8](https://youtu.be/ts76gocXLe8)
 
 - Create a wallet directory and navigate into the directory folder.
 ```
