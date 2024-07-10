@@ -19,8 +19,9 @@ grant SODA_APP to SEARCHDEMO;
 ```
 
 
-- Get Example to get json player data, simple change the player ID number to access and download other json files.
-http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'
+- Get Example to get json player data, download files (mlb_player1.json, mlb_player2.json, mlb_player3.json) from the repo. 
+[https://github.com/chipbaber/apex_textdemo/tree/main/json](https://github.com/chipbaber/apex_textdemo/tree/main/json)
+
 
 
 - See the video above to learn how to create a SODA collection in SQL Worksheet. Once created query the base table. 
