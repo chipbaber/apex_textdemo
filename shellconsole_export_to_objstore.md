@@ -1,9 +1,9 @@
-### Data Pump 101 for Autonomous Database in Cloud Shell Console
-In this video we will show how to quickly export information from your Autonomous database to object storage leveraging Oracle Data Pump and the OCI Shell Console. The video begins by setting up a auth token, a object storage bucket and opening the shell console. From there we connect into SQL*Web Developer and look at how to create a credential in the database to connect to object storage directly, then will construct a simple export statement that saves the .dmp to our object storage location. For learning purposes we will save our export.log file to the built in data pump directory, then show you how to both query the directory and how to move files from the out of the box directory to object storage leveraging the DBMS_CLOUD.PUT_OBJECT API. The code samples inside github include additional examples of import statements, export statements and code samples to delete credintials. 
+### Data Pump 101 for Autonomous Database in OCI Cloud Shell Console
+In this video we will show how to quickly export information from your Autonomous database to object storage leveraging Oracle Data Pump and the OCI Shell Console. The video begins by setting up a auth token, a object storage bucket and opening the shell console. From there we connect into SQL*Web Developer and look at how to create a credential in the database to connect to object storage directly, then will construct a simple export statement that saves the .dmp to our object storage location. For learning purposes we will save our export.log file to the built in data pump directory, then show you how to both query the directory and how to move files from the out of the box directory to object storage leveraging the DBMS_CLOUD.PUT_OBJECT API. The code samples inside github include additional examples of import statements, export statements and code samples to delete credentials. 
 
-Reference this video for how to connect your shell console to your autonomous db. [https://youtu.be/ts76gocXLe8](https://youtu.be/ts76gocXLe8)
+Reference this video for how to connect your shell console to your autonomous db. [Connect your OCI Shell Console to an Autonomous Database APEX Schema in 3 min.](https://youtu.be/ts76gocXLe8)
 
-- Please watch this video before proceeding to the sample code below []().
+- Please watch this video before proceeding to the sample code below [Data Pump 101 for Autonomous Database in OCI Cloud Shell Console](https://youtu.be/CvyzCjdDvTU).
 
 - Create or collect your auth token. 
 
