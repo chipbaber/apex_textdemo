@@ -99,7 +99,6 @@ END;
 SELECT owner, credential_name FROM dba_credentials;
 ```
 
-```
 - (Optional) Example Command to export to data pump dir a full schema. 
 ```
 expdp searchdemo@sluggersapex_low DIRECTORY=data_pump_dir DUMPFILE=searchdemo.dmp SCHEMAS=searchdemo LOGFILE=searchdemo6-14.log
