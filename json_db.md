@@ -34,11 +34,18 @@ select * from MLB_PLAYERS
 select * from MLB_PLAYERS_VIEW
 ```
 
-- Query through common javascript syntax in SQL
+- Query through common javascript syntax in SQL. Please note if you are leveraging Oracle 23ai+ for this demo you will need to swap the column name "json_document" for "data" as the default column name updated. 
 ```
+Ex. versions < 23ai
 SELECT p.json_document.player_info.queryResults."row".name_display_first_last "Player Name", 
 p.json_document.player_info.queryResults."row".jersey_number "Jersey",
 p.json_document.player_info.queryResults."row".name_nick "Nick Name"  
+FROM MLB_PLAYERS p;
+
+Ex. versions > 23ai
+SELECT p.data.player_info.queryResults."row".name_display_first_last "Player Name", 
+p.data.player_info.queryResults."row".jersey_number "Jersey",
+p.data.player_info.queryResults."row".name_nick "Nick Name"  
 FROM MLB_PLAYERS p;
 
 SELECT p.json_document.player_info.queryResults."row".name_display_first_last "Player Name", 
