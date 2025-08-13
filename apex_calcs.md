@@ -62,6 +62,29 @@ ALTER TABLE teamstats
 ADD (OPS AS (ROUND(OBP+SLG,3)));
 ```
 
+- (Optional) If you plan to leverage this example data in this example video for AI & MCP you will want to add the following table and column comments. Run these commands in SQL Worksheet. [https://youtu.be/TvQb7H11zYM](https://youtu.be/TvQb7H11zYM)
+```
+COMMENT ON TABLE TEAMSTATS IS 'This table the player statistics for the 2023 baseball season.';
+COMMENT ON COLUMN TEAMSTATS.JERSEY IS 'The jersey number of the player';
+COMMENT ON COLUMN TEAMSTATS.NAME IS 'The name number of the baseball player';
+COMMENT ON COLUMN TEAMSTATS.GP IS 'The number of games played by the baseball player';
+COMMENT ON COLUMN TEAMSTATS.PA IS 'The number of plate appearances by the baseball player';
+COMMENT ON COLUMN TEAMSTATS.AB IS 'The number of at bats by the baseball player. An official at-bat comes when a batter reaches base via a fielders choice, hit or an error (not including catchers interference) or when a batter is put out on a non-sacrifice.';
+COMMENT ON COLUMN TEAMSTATS.H IS 'The number of hits by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.C1B IS 'The number of singles by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.C2B IS 'The number of doubles by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.C3B IS 'The number of triples by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.HR IS 'The number of homeruns by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.RBI IS 'The number of runs batted in by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.BB IS 'The number of base on balls by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.SO IS 'The number of strikeouts by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.HBP IS 'The number of hit by pitches by a player in a season';
+COMMENT ON COLUMN TEAMSTATS.QAB IS 'The number of quality at bats for a player in a season';
+COMMENT ON COLUMN TEAMSTATS.QAB_ IS 'The percentage calculation of quality at bats for a player in a season. for example 46.55 is 46.55% of quality at bats. ';
+COMMENT ON COLUMN TEAMSTATS.AVG IS 'The batting average of the player rounded to 3 decimal places as calculated by the number of hits divided by the number of at bats in a season';
+COMMENT ON COLUMN TEAMSTATS.OBP IS 'The on base percentage for player rounded to 3 decimal places as calculated by (H+BB+HBP)/(AB+BB+HBP+SAC) in a season';
+```
+
 ### Example 3: Replicating Excel Calculations with Functions in Oracle APEX
 In part 3 of this series we are going to leverage functions to create calculations commonly performed in excel. Functions are programmatic in nature and provide a means for quering other tables, pulling in that data and then working with variables to really perform almost any formula provided in excel. The end result of a function is a single output, just like a cell in Excel. Our example today will begin by calculating OPS based off 2 virtual columns created in video 2 above. We will then showcase how you can call the function in a query. After that we will construct a slighlty more advanced function where we will calculate the team batting average, then compare to a players batting average and output the points above or below the team average the player is. Finally we will demonstrate how to create a view to hide the complexity of the virtual columns and functions for easy consumption and development inside Oracle APEX. 
 
