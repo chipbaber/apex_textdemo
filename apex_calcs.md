@@ -83,6 +83,10 @@ COMMENT ON COLUMN TEAMSTATS.QAB IS 'The number of quality at bats for a player i
 COMMENT ON COLUMN TEAMSTATS.QAB_ IS 'The percentage calculation of quality at bats for a player in a season. for example 46.55 is 46.55% of quality at bats. ';
 COMMENT ON COLUMN TEAMSTATS.AVG IS 'The batting average of the player rounded to 3 decimal places as calculated by the number of hits divided by the number of at bats in a season';
 COMMENT ON COLUMN TEAMSTATS.OBP IS 'The on base percentage for player rounded to 3 decimal places as calculated by (H+BB+HBP)/(AB+BB+HBP+SAC) in a season';
+comment on column teamstats.r is 'The total runs scored by the player in the season';
+comment on column teamstats.sb is 'total stolen bases by the player during the season.';
+comment on column teamstats.lob is 'total runners left on base when the player was at bat during the season.';
+comment on column teamstats.xbh is 'total extra base hits by a player during the season.';
 ```
 
 ### Example 3: Replicating Excel Calculations with Functions in Oracle APEX
