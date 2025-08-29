@@ -59,46 +59,68 @@ Please watch this video before proceeding with the steps below []()/
 	 PRIMARY KEY ("ID")
   USING INDEX  ENABLE
    ) ;
+```
+- Execute this code block in SQL Workshop. The execute immediate commands enable this to easily run without error in SQL workshop.
 
-   COMMENT ON COLUMN "TEAMSTATS"."JERSEY" IS 'The jersey number of the player';
-   COMMENT ON COLUMN "TEAMSTATS"."NAME" IS 'The name number of the baseball player';
-   COMMENT ON COLUMN "TEAMSTATS"."GP" IS 'The number of games played by the baseball player';
-   COMMENT ON COLUMN "TEAMSTATS"."PA" IS 'The number of plate appearances by the baseball player';
-   COMMENT ON COLUMN "TEAMSTATS"."AB" IS 'The number of at bats by the baseball player. An official at-bat comes when a batter reaches base via a fielders choice, hit or an error (not including catchers interference) or when a batter is put out on a non-sacrifice.';
-   COMMENT ON COLUMN "TEAMSTATS"."H" IS 'The number of hits by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."C1B" IS 'The number of singles by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."C2B" IS 'The number of doubles by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."C3B" IS 'The number of triples by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."HR" IS 'The number of homeruns by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."RBI" IS 'The number of runs batted in by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."R" IS 'total runs scored';
-   COMMENT ON COLUMN "TEAMSTATS"."BB" IS 'The number of base on balls by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."SO" IS 'The number of strikeouts by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."HBP" IS 'The number of hit by pitches by a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."SB" IS 'total stolen bases by the player during the season.';
-   COMMENT ON COLUMN "TEAMSTATS"."QAB" IS 'The number of quality at bats for a player in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."QAB_" IS 'The percentage calculation of quality at bats for a player in a season. for example 46.55 is 46.55% of quality at bats. ';
-   COMMENT ON COLUMN "TEAMSTATS"."LOB" IS 'total runners left on base when the player was at bat during the season.';
-   COMMENT ON COLUMN "TEAMSTATS"."XBH" IS 'total extra base hits by a player during the season.';
-   COMMENT ON COLUMN "TEAMSTATS"."AVG" IS 'The batting average of the player rounded to 3 decimal places as calculated by the number of hits divided by the number of at bats in a season';
-   COMMENT ON COLUMN "TEAMSTATS"."OBP" IS 'The on base percentage for player rounded to 3 decimal places as calculated by (H+BB+HBP)/(AB+BB+HBP+SAC) in a season';
-   COMMENT ON TABLE "TEAMSTATS"  IS 'This table the player statistics for the 2023 baseball season.';
+```
+   begin
+    execute immediate 'comment on column "TEAMSTATS"."JERSEY" is ''The jersey number of the player''';
+    execute immediate 'comment on column "TEAMSTATS"."NAME" is ''The name number of the baseball player''';
+    execute immediate 'comment on column "TEAMSTATS"."GP" is ''The number of games played by the baseball player''';
+    execute immediate 'comment on column "TEAMSTATS"."PA" is ''The number of plate appearances by the baseball player''';
+    execute immediate 'comment on column "TEAMSTATS"."AB" is ''The number of at bats by the baseball player. An official at-bat comes when a batter reaches base via a fielders choice, hit or an error (not including catchers interference) or when a batter is put out on a non-sacrifice.''';
+    execute immediate 'comment on column "TEAMSTATS"."H" is ''The number of hits by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."C1B" is ''The number of singles by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."C2B" is ''The number of doubles by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."C3B" is ''The number of triples by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."HR" is ''The number of homeruns by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."RBI" is ''The number of runs batted in by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."R" is ''total runs scored''';
+    execute immediate 'comment on column "TEAMSTATS"."BB" is ''The number of base on balls by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."SO" is ''The number of strikeouts by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."HBP" is ''The number of hit by pitches by a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."SB" is ''total stolen bases by the player during the season.''';
+    execute immediate 'comment on column "TEAMSTATS"."QAB" is ''The number of quality at bats for a player in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."QAB_" is ''The percentage calculation of quality at bats for a player in a season. for example 46.55 is 46.55% of quality at bats. ''';
+    execute immediate 'comment on column "TEAMSTATS"."LOB" is ''total runners left on base when the player was at bat during the season.''';
+    execute immediate 'comment on column "TEAMSTATS"."XBH" is ''total extra base hits by a player during the season.''';
+    execute immediate 'comment on column "TEAMSTATS"."AVG" is ''The batting average of the player rounded to 3 decimal places as calculated by the number of hits divided by the number of at bats in a season''';
+    execute immediate 'comment on column "TEAMSTATS"."OBP" is ''The on base percentage for player rounded to 3 decimal places as calculated by (H+BB+HBP)/(AB+BB+HBP+SAC) in a season''';
+    execute immediate 'comment on table "TEAMSTATS" is ''This table the player statistics for the 2023 baseball season.''';
+end;
+/
 ```
 
 - Next lets add some sample data. 
 ```
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (1, 'Nathaniel', 20, 49, 21, 19, 9, 6, 2, 2, 10, 35, 11, 5, 2, 11, 3, 11, 1, 1, 5, 1, 15, 58, .388, .456, .714, 27, 46.55, 198, '4', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (2, 'Jack', 14, 24, 9, 5, 4, 1, 0, 0, 1, 6, 1, 10, 0, 6, 3, 3, 0, 0, 0, 0, 23, 34, .208, .441, .25, 21, 61.76, 159, '7', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (3, 'Brodie', 20, 53, 30, 26, 15, 4, 3, 4, 11, 48, 22, 5, 3, 4, 0, 22, 1, 0, 5, 1, 16, 62, .491, .557, .906, 35, 56.45, 225, '8', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (4, 'Kellan', 20, 49, 20, 19, 9, 9, 0, 1, 10, 31, 11, 11, 1, 5, 1, 9, 0, 0, 4, 0, 24, 61, .388, .508, .633, 28, 45.9, 231, '9', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (5, 'Tank', 18, 47, 15, 18, 8, 7, 1, 2, 10, 33, 27, 4, 3, 4, 1, 8, 0, 0, 2, 2, 19, 54, .383, .463, .702, 25, 46.3, 178, '11', 'https://youtu.be/kz1E99o0KEU');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (6, 'Ben', 14, 25, 7, 8, 7, 1, 0, 0, 1, 9, 6, 3, 0, 4, 1, 0, 0, 0, 2, 1, 14, 28, .32, .393, .36, 10, 35.71, 113, '17', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (7, 'Noah', 20, 35, 7, 8, 7, 1, 0, 0, 1, 9, 3, 9, 0, 9, 2, 1, 1, 0, 1, 1, 22, 45, .229, .386, .257, 23, 51.11, 180, '21', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (8, 'Kaleb', 20, 46, 10, 14, 9, 3, 0, 2, 5, 23, 12, 9, 1, 8, 3, 6, 1, 1, 0, 0, 23, 58, .304, .421, .5, 25, 43.1, 187, '22', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (9, 'Chase', 20, 38, 11, 11, 8, 3, 0, 0, 3, 14, 8, 10, 1, 10, 5, 1, 0, 0, 0, 2, 29, 50, .289, .449, .368, 22, 44, 205, '23', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (10, 'Connor', 19, 32, 7, 6, 5, 1, 0, 0, 1, 7, 5, 10, 0, 10, 4, 3, 0, 0, 0, 1, 31, 42, .188, .381, .219, 19, 45.24, 189, '27', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (11, 'Matthew', 18, 36, 9, 12, 9, 3, 0, 0, 3, 15, 8, 8, 0, 6, 1, 1, 0, 0, 3, 2, 17, 44, .333, .455, .417, 20, 45.45, 155, '28', '');
-insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, avg, obp, slg, qab, qab_, ps, jersey, video) values (12, 'Charles', 20, 37, 9, 9, 8, 1, 0, 0, 1, 10, 5, 13, 2, 4, 1, 3, 0, 0, 3, 2, 18, 52, .243, .462, .27, 24, 46.15, 194, '99', '');
+begin
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (1, 'Nathaniel', 20, 49, 21, 19, 9, 6, 2, 2, 10, 35, 11, 5, 2, 11, 3, 11, 1, 1, 5, 1, 15, 58, 27, 46.55, 198, '4', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (2, 'Jack', 14, 24, 9, 5, 4, 1, 0, 0, 1, 6, 1, 10, 0, 6, 3, 3, 0, 0, 0, 0, 23, 34, 21, 61.76, 159, '7', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (3, 'Brodie', 20, 53, 30, 26, 15, 4, 3, 4, 11, 48, 22, 5, 3, 4, 0, 22, 1, 0, 5, 1, 16, 62, 35, 56.45, 225, '8', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (4, 'Kellan', 20, 49, 20, 19, 9, 9, 0, 1, 10, 31, 11, 11, 1, 5, 1, 9, 0, 0, 4, 0, 24, 61, 28, 45.9, 231, '9', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (5, 'Tank', 18, 47, 15, 18, 8, 7, 1, 2, 10, 33, 27, 4, 3, 4, 1, 8, 0, 0, 2, 2, 19, 54, 25, 46.3, 178, '11', 'https://youtu.be/kz1E99o0KEU');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (6, 'Ben', 14, 25, 7, 8, 7, 1, 0, 0, 1, 9, 6, 3, 0, 4, 1, 0, 0, 0, 2, 1, 14, 28, 10, 35.71, 113, '17', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (7, 'Noah', 20, 35, 7, 8, 7, 1, 0, 0, 1, 9, 3, 9, 0, 9, 2, 1, 1, 0, 1, 1, 22, 45, 23, 51.11, 180, '21', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (8, 'Kaleb', 20, 46, 10, 14, 9, 3, 0, 2, 5, 23, 12, 9, 1, 8, 3, 6, 1, 1, 0, 0, 23, 58, 25, 43.1, 187, '22', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (9, 'Chase', 20, 38, 11, 11, 8, 3, 0, 0, 3, 14, 8, 10, 1, 10, 5, 1, 0, 0, 0, 2, 29, 50, 22, 44, 205, '23', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (10, 'Connor', 19, 32, 7, 6, 5, 1, 0, 0, 1, 7, 5, 10, 0, 10, 4, 3, 0, 0, 0, 1, 31, 42, 19, 45.24, 189, '27', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (11, 'Matthew', 18, 36, 9, 12, 9, 3, 0, 0, 3, 15, 8, 8, 0, 6, 1, 1, 0, 0, 3, 2, 17, 44, 20, 45.45, 155, '28', '');
+    insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
+    values (12, 'Charles', 20, 37, 9, 9, 8, 1, 0, 0, 1, 10, 5, 13, 2, 4, 1, 3, 0, 0, 3, 2, 18, 52, 24, 46.15, 194, '99', '');
+    commit;
+end;
+/
 ```
 
 - Then add a procedure
@@ -118,8 +140,15 @@ find my teamstats table and only show the column comments that are missing
 Add a comment to SLG column that describes a baseball slugging percentage and how it is calculated from other columns in the table.
 repeat for SAC column
 repeat above for K_L, SF, ROE, FC, TB and PS columns
+write that so it runs all at once in APEX SQL Commands
 Create a query that generates Weighted On-Base Average per player
-create a new column that auto calculates the Weighted On-Base Average per player for the table
+some of the results below only show .39 modify the out put so it shows .390
+create a new column that auto calculates the Weighted On-Base Average per player for the table and makes sure the results for all show 3 decimal places like .390
+```
+
+- Query the table to see the end result
+```
+select * from teamstats;
 ```
 
 # Example 2 - Generating Advanced Queries & Code blocks
@@ -131,22 +160,27 @@ based on the number of games played by a player in the teamstats table create a 
 brodie got hurt, swap in the next best player and re-calculate runs per game
 ```
 
+- - Now lets combine the power of the general and query based AI assistant. Execute this query and copy the results from the SQL*workshop output. 
+```
+select column_name,
+       comments
+  from user_col_comments
+ where table_name = 'TEAMSTATS'
+   and comments is not null
+```
+
+- Open the General Assistant and past in the prompt followed by pasting the output of the query above. 
+```
+You have a table called teamstats with the following columns and column comments. Use this for the asks to come. 
+```
+
 - Open the general AI assistant and paste in the example below to see all the lineup combinations possible. 
 ```
 I have a table called teamstats, each player has a unique jersey number in the jersey column. write a code block that queries the table, returns the total number of unique players then calculates the number of combinations of 9 player lineups possible and returns to the coach the total number of lineup combinations he could potentially have.
 ```
 
-- Now lets combine the power of the general and query based AI assistant. Open the query based assistant first. Insert and run the query. 
 
-```
-Get me the column names and all the column comments for the teamstats table.
-```
-
-- Now loop back to the general assistant and enter the following followed by a cut and paste of the output of your query above. 
-```
-We have a table named teamstats with the column names and column descriptions below. Please use this as I ask my next questions. 
-```
-
+- Lets get a little more advanced with a more complex iterative build. 
 ```
 Write a program that outputs the best 9 player batting lineup along with the players avg, hits, rbis, base on balls, Quality at Bats and runs scored from the teamstats table. Create the code block with logic that aims to put the players most likely to get on base early in the lineup, followed by the players likely to hit them (rbis). As a coach we value speed and stolen bases then qab if players are similar. After printing your batting lineup, write a brief summary in 350 characters or less summarizing the lineup and the expected number of runs to score in a 9 inning game based on the lineup you created. 
 ```
