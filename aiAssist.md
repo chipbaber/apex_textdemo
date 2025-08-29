@@ -113,7 +113,7 @@ begin
     insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
     values (9, 'Chase', 20, 38, 11, 11, 8, 3, 0, 0, 3, 14, 8, 10, 1, 10, 5, 1, 0, 0, 0, 2, 29, 50, 22, 44, 205, '23', '');
     insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
-    values (10, 'Connor', 19, 32, 7, 6, 5, 1, 0, 0, 1, 7, 5, 10, 0, 10, 4, 3, 0, 0, 0, 1, 31, 42, 19, 45.24, 189, '27', '');
+    values (10, 'Canir', 19, 32, 7, 6, 5, 1, 0, 0, 1, 7, 5, 10, 0, 10, 4, 3, 0, 0, 0, 1, 31, 42, 19, 45.24, 189, '27', '');
     insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
     values (11, 'Matthew', 18, 36, 9, 12, 9, 3, 0, 0, 3, 15, 8, 8, 0, 6, 1, 1, 0, 0, 3, 2, 17, 44, 20, 45.45, 155, '28', '');
     insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
@@ -133,17 +133,21 @@ END myStats;
 /
 ```
 
-- With the data in place lets begin with the query based AI Assistant. 
+- Query your table to get a feel for the data you will work with. 
+```
+select * from teamstats
+```
+
+- With the data in place lets begin with the query based AI Assistant. Make sure to set the number of rows returned in the output to at least 50.
 ```
 does my teamstats table have any column comments
-find my teamstats table and only show the column comments that are missing
+find my teamstats table and only show the column name and comments that are missing
 Add a comment to SLG column that describes a baseball slugging percentage and how it is calculated from other columns in the table.
 repeat for SAC column
 repeat above for K_L, SF, ROE, FC, TB and PS columns
 write that so it runs all at once in APEX SQL Commands
-Create a query that generates Weighted On-Base Average per player
-some of the results below only show .39 modify the out put so it shows .390
-create a new column that auto calculates the Weighted On-Base Average per player for the table and makes sure the results for all show 3 decimal places like .390
+Create a query that calculates the advanced baseball metric Weighted On-Base Average per player based on the existing data
+some of the results below only show two decimal places common practice baseball is to show 3 modify the output so it shows the format .390
 ```
 
 - Query the table to see the end result
@@ -151,7 +155,7 @@ create a new column that auto calculates the Weighted On-Base Average per player
 select * from teamstats;
 ```
 
-# Example 2 - Generating Advanced Queries & Code blocks
+# Example 2 - Generating Advanced Queries & Constructing Code blocks
 
 - Now lets get a little more advanced in the query editor, clear the chat and paste in the asks below one at a time.
 ```
@@ -171,7 +175,7 @@ select column_name,
 
 - Open the General Assistant and past in the prompt followed by pasting the output of the query above. 
 ```
-You have a table called teamstats with the following columns and column comments. Use this for the asks to come. 
+You have a table called teamstats with the following columns and column comments below. Use this for the asks to come. 
 ```
 
 - Open the general AI assistant and paste in the example below to see all the lineup combinations possible. 
@@ -187,7 +191,7 @@ Write a program that outputs the best 9 player batting lineup along with the pla
 
 - Overall it did ok on pass one, but with any code you need to make, break and re-build so lets ask it to add what was left off. 
 ```
-under the Batting lineup print the 350 character summary in the procedure
+Close to the right answer. two fixes please make the AVG print with 3 decimals. You also forgot to print the   350 character summary in the procedure under the batting lineup.
 ```
 
 - Now lets see what we can make the AI do. 
@@ -205,7 +209,16 @@ Make sure to update your summary to include the new batting order logic. you can
 Do you think we will win this game?
 ```
 
-# Example 3 - Explaining and Improving Existing Code
+# Example 3 - Improving and Explaining Existing Code
+
+- Paste in the query below. 
+
+```
+select ci.id, ci.reg_id "Sessions reg", hr.registry_id "Hours reg ID", ci.guid, hr.ORACLE_GLOBAL_ULTIMATE_ID, hr.sr_number, ci.service_request from ci_sessions ci, ci_sr_hours hr where hr.sr_number = ci.service_request 
+and ci.reg_Id != hr.registry_id
+```
+
+- Outline and ask to improve, read the results. 
 
 - Navigate to the mystats procedure in the object browser then open the AI Assistant in General mode. 
 
