@@ -8,11 +8,11 @@ Please watch this video for step by step setup of the Generative AI Assistantant
 To perform the setup you will need the following: 
 
 - [ ] An Oracle Cloud Tenancy
-- [ ] A APEX Workspace with Developer/ADMIN priviledges
+- [ ] A APEX Workspace with Developer/ADMIN priviledges on the workspace
 - [ ] An OCI login with the ability to create an API key
 - [ ] A pem key or the ability to create a PEM key
 
-## (Coming Soon) 3 Practical Examples of How the AI Assitant in SQL Workshop can add Immediate Value 
+## (Coming Soon) Intro to Coaching your APEX AI Assitant
 
 # Example 1 - Prepping Tables for Better AI Results
 
@@ -150,16 +150,21 @@ Create a query that calculates the advanced baseball metric Weighted On-Base Ave
 some of the results below only show two decimal places common practice baseball is to show 3 modify the output so it shows the format .390
 ```
 
-- Query the table to see the end result
+- Query the table to see the end result with the comments.
 ```
-select * from teamstats;
+select column_name,
+       comments
+  from user_col_comments
+ where table_name = 'TEAMSTATS'
 ```
 
 # Example 2 - Generating Advanced Queries & Constructing Code blocks
 
 - Now lets get a little more advanced in the query editor, clear the chat and paste in the asks below one at a time.
 ```
-based on the number of games played by a player in the teamstats table create a 9 player lineup and forecast the number of runs potentially score in a single game based on the 9 players. in one column show the batting order in a comma seperated list with the player name and number. In the second colum show the forecased number of runs scored.
+based on the number of games played by a player in the teamstats table create a 9 player lineup and forecast the number of runs potentially score in a single game as a team based on your lineup. in one column show the batting order in a comma seperated list with the player name and number. In the second colum show the forecased number of runs scored.
+
+You are forecasting 59 runs a game, that is way to high. Adjust for a single game run total not a season.
 
 brodie got hurt, swap in the next best player and re-calculate runs per game
 ```
@@ -180,13 +185,15 @@ You have a table called teamstats with the following columns and column comments
 
 - Open the general AI assistant and paste in the example below to see all the lineup combinations possible. 
 ```
-I have a table called teamstats, each player has a unique jersey number in the jersey column. write a code block that queries the table, returns the total number of unique players then calculates the number of combinations of 9 player lineups possible and returns to the coach the total number of lineup combinations he could potentially have.
+I have a table called teamstats, each player has a unique jersey number in the jersey column. write a pl/sql code block that queries the table, returns the total number of unique players. Then have the code block calculate the number of combinations if the coach bats a 9 player lineup. Finally returns to the coach the total number of lineup combinations he could potentially have and the number of unique players on the team.
+
+
 ```
 
 
 - Lets get a little more advanced with a more complex iterative build. 
 ```
-Write a program that outputs the best 9 player batting lineup along with the players avg, hits, rbis, base on balls, Quality at Bats and runs scored from the teamstats table. Create the code block with logic that aims to put the players most likely to get on base early in the lineup, followed by the players likely to hit them (rbis). As a coach we value speed and stolen bases then qab if players are similar. After printing your batting lineup, write a brief summary in 350 characters or less summarizing the lineup and the expected number of runs to score in a 9 inning game based on the lineup you created. 
+Write a program that outputs the best 9 player batting lineup along with the players avg, hits, rbis, base on balls, Quality at Bats % and runs scored from the teamstats table. Create the code block with logic that aims to put the players most likely to get on base early in the lineup, followed by the players likely to hit rbis. As a coaching staff we value speed and stolen bases, then qab if players are similar. After printing your batting lineup, write a brief summary in 350 characters or less summarizing the lineup and the expected number of runs to score in a 9 inning game based on the lineup you created. 
 ```
 
 - Overall it did ok on pass one, but with any code you need to make, break and re-build so lets ask it to add what was left off. 
