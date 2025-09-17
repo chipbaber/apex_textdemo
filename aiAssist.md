@@ -159,7 +159,7 @@ select column_name,
  where table_name = 'TEAMSTATS'
 ```
 
-# Example 2 - Generating Advanced Queries & Constructing Code blocks
+# Example 2 - Generating Advanced Queries & Iterative AI Coaching for Code Block Construction
 
 - Now lets get a little more advanced in the query editor, clear the chat and paste in the asks below one at a time.
 ```
