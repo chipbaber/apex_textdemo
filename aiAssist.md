@@ -16,7 +16,7 @@ To perform the setup you will need the following:
 
 # Example 1 - Prepping Tables for Better AI Results
 
-In order for you to maximize the power of your AI assistant in APEX you need to make sure existing tables have proper table comments at both the table level and the column level. In the example below we will provide you a table with some column comments and a table comment. The comments will be incomplete The commands below will illustrate how to quickly add missing table comments then leverage those comments for enhanced AI asks. 
+In order for you to maximize the power of your AI assistant in APEX you need to make sure existing tables have proper table comments at both the table level and the column level. In the example below we will provide you a sample table with some column comments and a table comment. The comments will be incomplete The commands below will illustrate how to quickly add missing table comments then leverage those comments for enhanced AI asks. 
 
 Please watch this video before proceeding with the steps below []()/
 
@@ -91,7 +91,7 @@ end;
 /
 ```
 
-- Next lets add some sample data. 
+- Next lets add some sample data. Run this code inside SQL Commands. 
 ```
 begin
     insert into teamstats (id, name, gp, ab, r, h, c1b, c2b, c3b, hr, xbh, tb, rbi, bb, hbp, so, k_l, sb, sf, sac, roe, fc, lob, pa, qab, qab_, ps, jersey, video) 
@@ -123,7 +123,7 @@ end;
 /
 ```
 
-- Then add a procedure
+- Then add a procedure. Please note this procedure is only leveraged in example 3 below for when AI coaches the human.
 ```
 create or replace procedure myStats(atBats IN number, hits IN number, walks_hbp IN number, sac IN number, battingAvg OUT number, onBasePercentage out number) is
 BEGIN
@@ -138,7 +138,8 @@ END myStats;
 select * from teamstats
 ```
 
-- With the data in place lets begin with the query based AI Assistant. Make sure to set the number of rows returned in the output to at least 50.
+- With the data in place lets begin with the query based AI Assistant. Make sure to set the number of rows returned in the output to at least 50, then start running these statements in the query AI assistant one at a time. 
+
 ```
 does my teamstats table have any column comments
 find my teamstats table and only show the column name and comments that are missing
@@ -150,7 +151,7 @@ Create a query that calculates the advanced baseball metric Weighted On-Base Ave
 some of the results below only show two decimal places common practice baseball is to show 3 modify the output so it shows the format .390
 ```
 
-- Query the table to see the end result with the comments.
+- Query the table to see the end result with the comments. Please note the ID and video columns were not commented on in this video and should remain null. 
 ```
 select column_name,
        comments
@@ -169,7 +170,7 @@ You are forecasting 59 runs a game, that is way to high. Adjust for a single gam
 brodie got hurt, swap in the next best player and re-calculate runs per game
 ```
 
-- - Now lets combine the power of the general and query based AI assistant. Execute this query and copy the results from the SQL*workshop output. 
+- Combine the power of the general and query based AI assistant. Execute this query and copy the results from the SQL*workshop output. 
 ```
 select column_name,
        comments
@@ -186,8 +187,6 @@ You have a table called teamstats with the following columns and column comments
 - Open the general AI assistant and paste in the example below to see all the lineup combinations possible. 
 ```
 I have a table called teamstats, each player has a unique jersey number in the jersey column. write a pl/sql code block that queries the table, returns the total number of unique players. Then have the code block calculate the number of combinations if the coach bats a 9 player lineup. Finally returns to the coach the total number of lineup combinations he could potentially have and the number of unique players on the team.
-
-
 ```
 
 
@@ -196,12 +195,7 @@ I have a table called teamstats, each player has a unique jersey number in the j
 Write a program that outputs the best 9 player batting lineup along with the players avg, hits, rbis, base on balls, Quality at Bats % and runs scored from the teamstats table. Create the code block with logic that aims to put the players most likely to get on base early in the lineup, followed by the players likely to hit rbis. As a coaching staff we value speed and stolen bases, then qab if players are similar. After printing your batting lineup, write a brief summary in 350 characters or less summarizing the lineup and the expected number of runs to score in a 9 inning game based on the lineup you created. 
 ```
 
-- Overall it did ok on pass one, but with any code you need to make, break and re-build so lets ask it to add what was left off. 
-```
-Close to the right answer. two fixes please make the AVG print with 3 decimals. You also forgot to print the   350 character summary in the procedure under the batting lineup.
-```
-
-- Now lets see what we can make the AI do. 
+- Now lets see what we can make the AI do by adding more and more complexity to the code block. 
 ```
 very good, now based on this 9 player lineup addition queries and logic to the code block the use the 9 players selected and forecasts the likely hood the player has an extra base hit in the next game given the historical stats
 
@@ -209,14 +203,16 @@ add games played, BB and QAB % to the Batting lineup columns
 
 Add a section beneath the batting lineup called bench players that repeats the same columns for the starting lineup but for the players not currently in the game 
 
-adjust the starting lineup logic in the procedure such that anyone batting less than .250 must bat 6th to 9th
+adjust the starting lineup logic in the procedure such that anyone batting less than .300 must bat 6th to 9th
 
 Make sure to update your summary to include the new batting order logic. you can go up to 500 characters on it.
 
-Do you think we will win this game?
+Do you think we will win this game? 
 ```
 
 # Example 3 - Improving and Explaining Existing Code
+
+This is not shown in the video but may be in future segments. It illustrates how AI can begin coaching you as a coder or improve historically written code. 
 
 - Paste in the query below. 
 
