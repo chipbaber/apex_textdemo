@@ -1,6 +1,6 @@
 ## How to Setup the Oracle APEX AI Assistant in Your Workspace in Under 4 Minutes 
 
-In this video we will show you how to quickly wire your existing APEX installation to Oracle's OCI Generative AI models to enable the APEX AI Assistant and accelerate low coding through vibe coding practices. We recorded the video leveraging Oracle's 23ai Autonomous Transaction Processing Database with Oracle APEX 24.2.7. We will begin with a blank workspace and show how to access the workspace utilities, navigate to the Generative AI configuration screen and walk you through the configuration step by step. The setup does require that you have an OCI login and have access to the OCI Gen AI Service in your region. With that the video will showcase how to gather the compartment id, create a new API Key, gather the fingerprint, tenancy ocid, user ocid and where to place your private key in the configuration. Once configured you will test your connection and validate the AI Assistant functionality is now appearing inside SQL Worksheet. Don't struggle with the documentation or locating the required configuration details, in under four minutes this video will have you up and running. 
+In this video we will show you how to quickly wire your existing APEX installation to Oracle's OCI Generative AI models to enable the APEX AI Assistant and accelerate low coding with vibe coding practices. We recorded the video leveraging Oracle's 23ai Autonomous Transaction Processing Database with Oracle APEX 24.2.7. We will begin with a blank workspace and show how to access the workspace utilities, navigate to the Generative AI configuration screen and walk you through the configuration step by step. The setup does require that you have an OCI login and have access to the OCI Gen AI Service in your region. With that the video will showcase how to gather the compartment id, create a new API Key, gather the fingerprint, tenancy ocid, user ocid and where to place your private key in the configuration. Once configured you will test your connection and validate the AI Assistant functionality is now appearing inside SQL Worksheet. Don't struggle with the documentation or locating the required configuration details, in under four minutes this video will have you up and running. 
 
 ## Setting Up Oracle APEX AI Assistant
 Please watch this video for step by step setup of the Generative AI Assistantant. [https://youtu.be/a7q22FkYQ0U](https://youtu.be/a7q22FkYQ0U) 
@@ -12,13 +12,17 @@ To perform the setup you will need the following:
 - [ ] An OCI login with the ability to create an API key
 - [ ] A pem key or the ability to create a PEM key
 
-## (Coming Soon) Intro to Coaching your APEX AI Assitant
+## Intro to Coaching your APEX AI Assitant
+
+This video is a introduction to some common ways you can coach your APEX AI Assistant to improve both code quality and speed of development. We will begin by creating a small table with sample data inside your APEX workspace. Your coaching journey will start by leveraging the SQL Workshhop query builder AI assistant to identify, add and improve your table's existing column comments. To do this we will coach the model on how to leverage the Grok model's LLM embodyment in parrallel with the query builder to auto generate meaningful SQL statements to add column comments. The additional comments will then help the AI Assistant understand the schema better for all future asks in the video. Next we will 
+
+Our video is designed to be watched, then replicated in your environment so your can practice coaching your AI Assistant. 
+
+Please watch this video before proceeding with the steps below. []()/
 
 # Example 1 - Prepping Tables for Better AI Results
 
 In order for you to maximize the power of your AI assistant in APEX you need to make sure existing tables have proper table comments at both the table level and the column level. In the example below we will provide you a sample table with some column comments and a table comment. The comments will be incomplete The commands below will illustrate how to quickly add missing table comments then leverage those comments for enhanced AI asks. 
-
-Please watch this video before proceeding with the steps below []()/
 
 - Lets begin by creating a sample table. Please execute the code below. 
 
