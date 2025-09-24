@@ -14,11 +14,28 @@ To perform the setup you will need the following:
 
 ## Intro to Coaching your APEX AI Assitant
 
-This video is a introduction to some common ways you can coach your APEX AI Assistant to improve both code quality and speed of development. We will begin by creating a small table with sample data inside your APEX workspace. Your coaching journey will start by leveraging the SQL Workshhop query builder AI assistant to identify, add and improve your table's existing column comments. To do this we will coach the model on how to leverage the Grok model's LLM embodyment in parrallel with the query builder to auto generate meaningful SQL statements to add column comments. The additional comments will then help the AI Assistant understand the schema better for all future asks in the video. Next we will 
+This video is an introduction to some common ways a human developer can coach your APEX AI Assistant to improve both code quality and development speed. This demo was recorded using Oracle ATP-S on OCI, with APEX version 24.2.8 and the latest GROK model available through OCI's Gen-AI service at the time.
 
-Our video is designed to be watched, then replicated in your environment so your can practice coaching your AI Assistant. 
+The video begins by creating a small table with sample data inside your APEX workspace. Your coaching journey will start by using the SQL Workshop query builder AI assistant to identify, add, and improve your table's existing column comments. To do this, we will coach the model on how to utilize the Grok model's LLM integration in parallel with the query builder to auto-generate meaningful SQL statements that add column comments. The additional column comments will help the AI Assistant better understand the schema and improve the quality of responses for all future development tasks in the video.
 
-Please watch this video before proceeding with the steps below. []()/
+With initial table comments in place, we showcase how to coach the AI Query Assistant to:
+
+- Create multi-statement comment responses that build on a prior single prompt in a single request.
+- Transform the multi-statement response into a single code block that can be executed in SQL Commands.
+- Apply logic from the LLM embodyment for Weighted on Base Average and apply it to a new query using the data and columns in our database.
+- Perform iterative formatting corrections in the context of prior generations.
+- Coach the AI on how to correct ORA- errors when previous query generations are executed.
+
+Halfway through the video, we will transition our coaching from the AI Query Assistant to the AI General Assistant. During this section, you will learn how to:
+
+- Prompt engineer the general assistant so it can leverage the table name and comments to generate more accurate results for complex tasks.
+- Iteratively coach the AI to improve subsets of PL/SQL code blocks to achieve the desired results.
+- Guide ("vibe coach") the AI through multiple prompts to generate increasing complexity within code blocks.
+- Use human development experience to find, then coach AI to fix errors when the AI is not able to resolve the challenge.
+
+This video is designed to be watched and then replicated in your environment, so you can practice coaching your AI Assistant. AI is not always consistent, so you may experience slightly different results than those shown in the video. However, the methods of AI coaching should be applicable to whatever results you receive.
+
+Please watch this video before proceeding with the steps below. [https://youtu.be/qSt6VGaSEG4](https://youtu.be/qSt6VGaSEG4).
 
 # Example 1 - Prepping Tables for Better AI Results
 
