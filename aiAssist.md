@@ -1,4 +1,4 @@
-## How to Setup the Oracle APEX AI Assistant in Your Workspace in Under 4 Minutes 
+## Part 1: How to Setup the Oracle APEX AI Assistant in Your Workspace in Under 4 Minutes 
 
 In this video we will show you how to quickly wire your existing APEX installation to Oracle's OCI Generative AI models to enable the APEX AI Assistant and accelerate low coding with vibe coding practices. We recorded the video leveraging Oracle's 23ai Autonomous Transaction Processing Database with Oracle APEX 24.2.7. We will begin with a blank workspace and show how to access the workspace utilities, navigate to the Generative AI configuration screen and walk you through the configuration step by step. The setup does require that you have an OCI login and have access to the OCI Gen AI Service in your region. With that the video will showcase how to gather the compartment id, create a new API Key, gather the fingerprint, tenancy ocid, user ocid and where to place your private key in the configuration. Once configured you will test your connection and validate the AI Assistant functionality is now appearing inside SQL Worksheet. Don't struggle with the documentation or locating the required configuration details, in under four minutes this video will have you up and running. 
 
@@ -12,7 +12,7 @@ To perform the setup you will need the following:
 - [ ] An OCI login with the ability to create an API key
 - [ ] A pem key or the ability to create a PEM key
 
-## Intro to Coaching your APEX AI Assitant
+## Part 2: Intro to Coaching your APEX AI Assitant
 
 This video is an introduction to some common ways a human developer can coach your APEX AI Assistant to improve both code quality and development speed. This demo was recorded using Oracle ATP-S on OCI, with APEX version 24.2.8 and the latest GROK model available through OCI's Gen-AI service at the time.
 
@@ -144,16 +144,6 @@ end;
 /
 ```
 
-- Then add a procedure. Please note this procedure is only leveraged in example 3 below for when AI coaches the human.
-```
-create or replace procedure myStats(atBats IN number, hits IN number, walks_hbp IN number, sac IN number, battingAvg OUT number, onBasePercentage out number) is
-BEGIN
-battingAvg := round(hits/(atBats),3);
-onBasePercentage := round((hits+walks_hbp)/(atBats+walks_hbp+sac),3);
-END myStats;
-/
-```
-
 - Query your table to get a feel for the data you will work with. 
 ```
 select * from teamstats
@@ -231,7 +221,7 @@ Make sure to update your summary to include the new batting order logic. you can
 Do you think we will win this game? 
 ```
 
-# Example 3 - Improving and Explaining Existing Code
+# Part 3 (Optional/Coming Soon!) - Improving and Explaining Existing Code
 
 This is not shown in the video but may be in future segments. It illustrates how AI can begin coaching you as a coder or improve historically written code. 
 
@@ -243,6 +233,16 @@ and ci.reg_Id != hr.registry_id
 ```
 
 - Outline and ask to improve, read the results. 
+
+- Add a procedure to show how the AI can improve existing human written code. 
+```
+create or replace procedure myStats(atBats IN number, hits IN number, walks_hbp IN number, sac IN number, battingAvg OUT number, onBasePercentage out number) is
+BEGIN
+battingAvg := round(hits/(atBats),3);
+onBasePercentage := round((hits+walks_hbp)/(atBats+walks_hbp+sac),3);
+END myStats;
+/
+```
 
 - Navigate to the mystats procedure in the object browser then open the AI Assistant in General mode. 
 
