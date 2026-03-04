@@ -253,5 +253,100 @@ END myStats;
 - Outline the code again and click improve. Insert and inspect the code. 
 
 
+# Part 4 Generating 23ai Table and Column Annotations
+
+This section will show how to create and leverage annotation and annotation key value pairs to better describe columns and tables. 
+
+- Prompts to coach AI Assistant to create annotations. 
+
+```
+we need to generate statements to create a new annotation on a table in 23ai. The format looks like like alter table teamstats annotations (add teamstats 'add description')
+
+create a new annotation for the teamstats table. This table represents season stats for a team. Each row is the individual stats for player. Please wordsmith that
+
+select all the columns from the user_annotations_usage view where the object is a table and the annotation is not on a column
+
+creates an new annotation this time for the teamstats H column called Hits then add a 2 sentence description letting the reader know it represents the number of hits for a player in a season
+
+select all annotations on columns
+
+add a second annotation called mlb glossary reference with the value https://www.mlb.com/glossary/standard-stats/hit
+
+take the last 2 annotations you created on the H column and create a single new annotation statement called definition where the value is a json payload with the prior annotation key and values. Then add additional elements to the json for annotation creation date, definition of what a hit is.
+
+remove the nesting from the json payload
+
+select all the annotations from the user_annotations_usage view where the object type is column h
+
+```
+
+- Now lets create a simple app with a form to show you a creative way a annotation can help enhance a users experience. Below is the core prompt. 
+
+```
+create an app called Teamstats App. The app needs a page to enter data into the teamstats table. A page to report on all the data in the table.
+```
 
 
+
+
+- Example syntax to add a table annotation
+```
+alter table teamstats annotations (add teamstats 'Table containing statistics for teams, including batting and performance metrics.')
+```
+
+- Example statement to drop an annotation for a column
+```
+alter table teamstats modify (H annotations (drop definition))
+```
+
+- Example statement to drop an annotation for a table
+```
+alter table teamstats annotations (drop Team_Statistics)
+```
+
+
+- Example queries from core views
+```
+select * from user_annotations_usage where object_type = 'TABLE'
+select * from user_annotations
+select * from all_annotations
+```
+
+- Testing json query and results. Teaching AI to find annotations with json and outputing friendly. 
+```
+query the user_annotations_usage view for annotations on columns in the teamstats table
+add a column with a case when statement to determine if the annotation value is json or not
+That is incorrect, the correct syntax for the comparison after the when and before the then is uau.annotation_value IS JSON please fix
+now add a filter that only returns rows with valid json
+This is an example syntax from the json returned, can you use it to output a nicer format to the reader in a single row. { "description" : "This column represents the total number of hits for a player in a season. It tracks the individual performance metric for batting success.", "mlb_glossary_reference" : "https://www.mlb.com/glossary/standard-stats/hit", "creation_date" : "2023-10-05", "hit_definition" : "A hit occurs when a batter strikes the baseball into fair territory and reaches base without an error or fielder's choice being made by the defense." }
+
+```
+
+
+```
+   select replace(
+           'Description: ' || json_query(ua.annotation_value, '$.description' without array wrapper) || '<br>' ||
+           'MLB Glossary Reference: ' || json_query(ua.annotation_value, '$.mlb_glossary_reference' without array wrapper) || '<br>' ||
+           'Creation Date: ' || json_query(ua.annotation_value, '$.creation_date' without array wrapper) || '<br>' ||
+           'Hit Definition: ' || json_query(ua.annotation_value, '$.hit_definition' without array wrapper),
+           '"', ' '
+       ) as formatted_annotation
+  from user_annotations_usage   ua
+ where ua.object_name = 'TEAMSTATS'
+   and ua.annotation_value is json
+   and ua.column_name = 'H'
+   and ua.annotation_name = 'DEFINITION'
+```
+
+
+  select replace('Description: ' || json_query(ua.annotation_value, '$.description' without array wrapper) || '<br>' ||
+           'MLB Glossary Reference: ' || json_query(ua.annotation_value, '$.mlb_glossary_reference' without array wrapper) || '<br>' ||
+           'Creation Date: ' || json_query(ua.annotation_value, '$.creation_date' without array wrapper) || '<br>' ||
+           'Hit Definition: ' || json_query(ua.annotation_value, '$.hit_definition' without array wrapper),
+           '"', ' ') 
+      into l_annotation_value
+    from user_annotations_usage   ua
+ where ua.object_name = 'TEAMSTATS'
+   and ua.annotation_value is json
+   and ua.column_name = 'H'
+   and ua.annotation_name = 'DEFINITION'
