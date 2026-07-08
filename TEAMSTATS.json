@@ -1,0 +1,526 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ORDS generated API for TEAMSTATS",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/players/teamstats"
+        }
+    ],
+    "paths": {
+        "/": {
+            "delete": {
+                "description": "Remove a record from TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted result."
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "JSON QBE parameter."
+                    }
+                ]
+            },
+            "get": {
+                "description": "Retrieve records from TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The queried record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/teamstats_ITEM"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "JSON QBE parameter."
+                    }
+                ]
+            },
+            "post": {
+                "description": "Create a new record on TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The successfully created record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/teamstats_ITEM"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/teamstats_ITEM"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/batchload": {
+            "post": {
+                "description": "Create new records on TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The status of the processed records.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "text/csv": {
+                            "schema": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "delete": {
+                "description": "Remove a record from TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted result."
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[^/]+$"
+                        },
+                        "description": "Primary key(s):  id"
+                    }
+                ]
+            },
+            "get": {
+                "description": "Retrieve a record from TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The queried record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/teamstats_ITEM"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[^/]+$"
+                        },
+                        "description": "Primary key(s):  id"
+                    }
+                ]
+            },
+            "put": {
+                "description": "Create or update a record on TEAMSTATS",
+                "security": [
+                    {
+                        "BasicAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    },
+                    {
+                        "OAuth2": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The successfully updated record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/teamstats_ITEM"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "The successfully created record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/teamstats_ITEM"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[^/]+$"
+                        },
+                        "description": "Primary key(s):  id"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/teamstats_ITEM_2"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BasicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "OAuth2": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/players/oauth/auth",
+                        "scopes": {}
+                    },
+                    "authorizationCode": {
+                        "authorizationUrl": "https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/players/oauth/auth",
+                        "tokenUrl": "https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/players/oauth/token",
+                        "scopes": {}
+                    },
+                    "clientCredentials": {
+                        "tokenUrl": "https://ayxzx2tnd0tqzed-sluggersapex.adb.us-ashburn-1.oraclecloudapps.com/ords/players/oauth/token",
+                        "scopes": {}
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "NUMBER": {
+                "type": "number"
+            },
+            "VARCHAR2": {
+                "type": "string"
+            },
+            "teamstats_ITEM": {
+                "properties": {
+                    "ab": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "avg": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "bb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c1b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c2b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c3b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "fc": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "gp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "h": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "hbp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "hr": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "id": {
+                        "x-ords-primary-key": "true",
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "jersey": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "k_l": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "lob": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/VARCHAR2"
+                    },
+                    "obp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "pa": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "ps": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "qab": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "qab_": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "r": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "rbi": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "roe": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sac": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sf": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "slg": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "so": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "tb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "video": {
+                        "$ref": "#/components/schemas/VARCHAR2"
+                    },
+                    "xbh": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    }
+                }
+            },
+            "teamstats_ITEM_2": {
+                "properties": {
+                    "ab": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "avg": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "bb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c1b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c2b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "c3b": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "fc": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "gp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "h": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "hbp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "hr": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "jersey": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "k_l": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "lob": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/VARCHAR2"
+                    },
+                    "obp": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "pa": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "ps": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "qab": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "qab_": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "r": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "rbi": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "roe": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sac": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "sf": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "slg": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "so": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "tb": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    },
+                    "video": {
+                        "$ref": "#/components/schemas/VARCHAR2"
+                    },
+                    "xbh": {
+                        "$ref": "#/components/schemas/NUMBER"
+                    }
+                }
+            }
+        }
+    }
+}
