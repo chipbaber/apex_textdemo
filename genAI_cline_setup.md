@@ -2,7 +2,7 @@
 
 This guide shows how to connect Cline to Oracle Generative AI by using an Oracle Generative AI API key and an OpenAI-compatible endpoint.
 
-> **Note:** Please watch the accompanying video before proceeding. The instructions below are intended as a high-level supplement to the video.
+> **Note:** Please watch the accompanying video [https://youtu.be/ZhFmOjUU3AE](https://youtu.be/ZhFmOjUU3AE) before proceeding. The instructions below are intended as a high-level supplement to the video.
 
 ## Prerequisites
 
