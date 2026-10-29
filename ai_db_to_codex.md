@@ -1,7 +1,9 @@
 ## Instructions to Connect Codex Client to AI Database 
 
 This markdown provides all the instructions to setup a connection on Windows from Codex to your AI Database. Before proceeding to any steps below please watch these videos:
+
 [Create a AI Database in 90 Seconds](https://youtu.be/a350ebLzyV0)
+
 [How to Connect Codex to an AI Database on Windows](https://youtu.be/zMRwrDEESuY)
 
 ### Codex Arguments for Connectivity 
@@ -31,10 +33,27 @@ Argument 4
 	-mcp
 ```
 
+### Prompts entered in Codex
+
+```
+list all available connections
+```
+
+```
+connect to players, then query to get all existing table names
+```
+
+```
+show all rows in teamstats
+```
+
+```
+show me a nice chart table
+```
 
 ### Database User and Table Setup
 
-Connect to the Autonomous Database as `ADMIN` and run the following statements to create the `PLAYERS` database user. Replace the password placeholder with a strong, unique password before executing; do not commit the real password to this file. If `PLAYERS` already exists, do not run `CREATE USER` again.
+While not required if you wanted to exactly replicate the Connect to the Autonomous Database as `ADMIN` and run the following statements to create the `PLAYERS` database user. Replace the password placeholder with a strong, unique password before executing; do not commit the real password to this file. If `PLAYERS` already exists, do not run `CREATE USER` again.
 
 ```sql
 CREATE USER players IDENTIFIED BY "<replace-with-strong-unique-password>"
